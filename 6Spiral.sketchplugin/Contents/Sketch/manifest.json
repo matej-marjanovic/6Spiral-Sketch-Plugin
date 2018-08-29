@@ -1,0 +1,25 @@
+{
+  "name" : "🌀6Spiral",
+  "identifier" : "design.matej.6spiral",
+  "version" : "1.0",
+  "description" : "Plugin to make spirals in Sketch.",
+  "author" : "Matej Marjanovic",
+  "commands" : [
+    {
+      "script" : "plugin.js",
+      "handlers": {
+        "run": "onRun",
+        "actions": {
+          "SelectionChanged.finish": "onSelectionChanged",
+        }
+      },
+      "name" : "🌀6Spiral - Make Spiral",
+      "shortcut": "ctrl shift 6",
+      "identifier" : "design.matej.6spiral.command"
+    }
+  ],
+  "menu": {
+    "isRoot": true,
+    "items": ["design.matej.6spiral.command"]
+  }
+}
