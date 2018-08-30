@@ -46,7 +46,7 @@ function setDegreeIncrementLabel() {
 
 function setSpiralGapLabel() {
   var spiralGap = Math.abs(outerR.value - innerR.value) / revolutions.value;
-  spiralGapLabel.innerHTML = "Gap of 100" + spiralGap.toFixed(2) + " after each rotation of the spiral";
+  spiralGapLabel.innerHTML = "Gap of " + spiralGap.toFixed(2) + " after each rotation of the spiral";
 }
 
 document.getElementById('spiral-button-1').addEventListener('click',function(){
