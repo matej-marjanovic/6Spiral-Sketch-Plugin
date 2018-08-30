@@ -1,13 +1,17 @@
 @import "MochaJSDelegate.js";
 
-function onRun(context) {
+var doc;
+var selectedLayers;
+var selectedCount;
+var layer;
 
-  var doc = context.document;
-  var selectedLayers = context.selection;
-  var selectedCount = selectedLayers.count();
+function onRun(context) {
+  doc = context.document;
+  selectedLayers = context.selection;
+  selectedCount = selectedLayers.count();
 
   var panelWidth = 400; // original 80
-  var panelHeight = 800; // original 240
+  var panelHeight = 600; // original 240
 
   // Create an NSThread dictionary with a specific identifier
   var threadDictionary = NSThread.mainThread().threadDictionary();
@@ -54,6 +58,10 @@ function onRun(context) {
   // Access the Web page's JavaScript environment
   var windowObject = webView.windowScriptObject();
 
+  if(selectedCount != 0) {
+    layer = selectedLayers[0];
+  }
+
   // Create the delegate
   var delegate = new MochaJSDelegate({
 
@@ -67,12 +75,6 @@ function onRun(context) {
       var data = JSON.parse(hash);
       log(data);
 
-      if (data.hasOwnProperty('action')) {
-        // Launch a Sketch action and focus the main window
-        context.document.actionsController().actionForID(data.action).doPerformAction(null);
-        NSApp.mainWindow().makeKeyAndOrderFront(null);
-      }
-
       if (data.hasOwnProperty('spiral')) {
         // Make a SPIRAL.
         log("SPIRAL DEBUG // PRESSED MAKE SPIRAL BUTTON!!!");
@@ -80,13 +82,14 @@ function onRun(context) {
         log("SPIRAL DEBUG // " + selectedCount);
         log("SPIRAL DEBUG // DRAW" + context.document.contentDrawView());
         if(selectedCount != 0) {
-            var layer = selectedLayers[0];
-            log("SPIRAL DEBUG // " + layer);
+            log("SPIRAL DEBUG // Layer " + layer);
+            log("SPIRAL DEBUG // Layer " + layer.toString());
             //check that this layer is a shape
             if (layer && layer.isKindOfClass(MSShapeGroup)) {
 
                 layer.select_byExtendingSelection(true, false);
 
+                log("SPIRAL DEBUG // addSpiral layer " + layer);
                 addSpiral(layer, data);
         
                 //group and name new group
@@ -179,6 +182,7 @@ function addSpiral(layer, data) {
 
     spiralPath.lineToPoint(NSMakePoint(pointX, pointY));
   }
+
   //spiralPath.closePath();
   spiralPath = MSPath.pathWithBezierPath(spiralPath);
   var spiralShape = MSShapeGroup.shapeWithBezierPath(spiralPath);
@@ -203,35 +207,8 @@ function addSpiral(layer, data) {
   var gr = layer.parentGroup();
   var grFrame = gr.frame();
 
-  log("SPIRAL DEBUG // gr " + gr.toString());
   log("SPIRAL DEBUG // grFrame " + grFrame.toString());
-  log("SPIRAL DEBUG // layerFrame " + layer.frame().toString());
-  log("SPIRAL DEBUG // spiralFrame " + spiralShape.frame().toString());
-  log("SPIRAL DEBUG // spiralFrame " + spiralShape.frame().x().toString());
-  log("SPIRAL DEBUG // spiralFrame " + spiralShape.frame().y().toString());
-  log("SPIRAL DEBUG // spiralFrame " + spiralShape.frame().width().toString());
-  log("SPIRAL DEBUG // spiralFrame " + spiralShape.frame().height().toString());
-  log("SPIRAL DEBUG // spiralFrame height " + typeof spiralShape.frame().height());
-  log("SPIRAL DEBUG // spiralFrame width " + typeof spiralShape.frame().width());
-  log("SPIRAL DEBUG // spiralFrame x is " + typeof spiralShape.frame().x());
-  log("SPIRAL DEBUG // spiralFrame y is " + typeof spiralShape.frame().y());
 
-  var testX =  spiralShape.frame().height();
-  log("SPIRAL DEBUG // test X " + testX.toString());
-  var testX =  spiralShape.frame().x();
-  log("SPIRAL DEBUG // test X " + testX.toString());
-  var testX =  spiralShape.frame().y();
-  log("SPIRAL DEBUG // test X " + testX.toString());
-
-  
-  var finalX = (layer.frame().x() + (layer.frame().width()/2.0)) - (spiralShape.frame().width()/2.0);
-  var finalY = (layer.frame().y() + (layer.frame().height()/2.0)) - (spiralShape.frame().height()/2.0);
-
-  log("SPIRAL DEBUG // final X " + finalX.toString());
-  log("SPIRAL DEBUG // final Y " + finalY.toString());
-
-  // spiralShape.frame().x = 100.25;
-  // spiralShape.frame().y = 100.25;
   spiralShape.frame().x = (layer.frame().x() + (layer.frame().width()/2.0)) + (spiralShape.frame().x());
   spiralShape.frame().y = (layer.frame().y() + (layer.frame().height()/2.0)) + (spiralShape.frame().y());
 
@@ -253,12 +230,23 @@ var onSelectionChanged = function(context) {
     var webView = panel.contentView().subviews()[1];
     var windowObject = webView.windowScriptObject();
 
-    // Get the current selection and update the CSS preview accordingly
     var selection = context.actionContext.document.selectedLayers().layers();
-    if (selection.length == 1) {
-      windowObject.evaluateWebScript("updatePreview('" + selection[0].CSSAttributes().join(" ") + "')");
-    } else {
-      windowObject.evaluateWebScript("updatePreview(' ')");
+    selectedCount = selection.length;
+    log("SPIRAL DEBUG // onSelectionChanged selection " + selection.toString());
+
+    if(selectedCount != 0) {
+      layer = selection[0];
+      log("SPIRAL DEBUG LAYER // " + layer.toString());
+      log("SPIRAL DEBUG // onSelectionChanged frame " + selection[0].frame().toString());
+      //check that this layer is a shape
+      if (layer && layer.isKindOfClass(MSShapeGroup)) {
+
+          log("SPIRAL DEBUG // onSelectionChanged MSShapeGroup found");
+  
+      } else {
+        log("SPIRAL DEBUG // NOT FOUND onSelectionChanged MSShapeGroup");
+        context.actionContext.document.showMessage('Need to select shape for 🌀6Spiral.');
+      }
     }
   }
 };
