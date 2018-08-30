@@ -32,6 +32,7 @@ degrees.addEventListener('input', function (evt) {
   console.log(this.value);
   revolutions.value = this.value/360;
   setDegreeIncrementLabel();
+  setSpiralGapLabel();
 });
 
 points.addEventListener('input', function (evt) {
