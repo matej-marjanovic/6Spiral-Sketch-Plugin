@@ -7,8 +7,8 @@
 
 var innerR = document.getElementById('InnerRadius');
 var outerR = document.getElementById('OuterRadius');
-var revolutions = document.getElementById('Revolutions');
 var degrees = document.getElementById('Degrees');
+var revolutions = document.getElementById('Revolutions');
 var points = document.getElementById('Points');
 var degreeIncrementLabel = document.getElementById('DegreeIncrementLabel');
 var spiralGapLabel = document.getElementById('SpiralGapLabel');
@@ -54,10 +54,10 @@ document.getElementById('spiral-button-1').addEventListener('click',function(){
   // Create JSON object with the action we want to trigger and the current UNIX date
   var data = {
     "spiral": "Archimedean Spiral",
-    "innerRadius": innerR.value,
-    "outerRadius": outerR.value,
-    "degrees": degrees.value,
-    "points": points.value,
+    "innerRadius": Math.round(innerR.value),
+    "outerRadius": Math.round(outerR.value),
+    "degrees": Math.round(degrees.value),
+    "points": Math.round(points.value),
     "date": new Date().getTime()
   }
   console.log(data);

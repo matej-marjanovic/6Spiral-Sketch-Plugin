@@ -41,28 +41,28 @@
           <div class="container my-form">
               <h2>Create a Spiral</h2>
               <form>
-                <div class="form-group">
+                <div class="form-group col-sm">
                   <label for="number">Inner Radius:</label>
-                  <input type="number" class="form-control" id="InnerRadius" name="InnerRadius" value="100">
+                  <input type="number" min="0" max="50000" class="form-control" id="InnerRadius" name="InnerRadius" value="100">
                 </div>
-                <div class="form-group">
+                <div class="form-group col-sm">
                     <label for="number">Outer Radius:</label>
-                    <input type="number" class="form-control" id="OuterRadius" name="OuterRadius" value="300">
+                    <input type="number" min ="0" max="100000" class="form-control" id="OuterRadius" name="OuterRadius" value="300">
                 </div>
                 <div class="form-group">
-                    <label for="number">Full Revolutions:</label>
+                    <label for="number">Revolutions in degrees:</label>
+                    <input type="number" class="form-control" id="Degrees" name="Revolutions" value="720">
+                  </div>
+                <div class="form-group">
+                    <label for="number">Total revolutions:</label>
                     <input type="number" class="form-control" id="Revolutions" name="Revolutions" value="2">
-                </div>
-                <div class="form-group">
-                  <label for="number">Revolution in degrees:</label>
-                  <input type="number" class="form-control" id="Degrees" name="Revolutions" value="720">
                 </div>
                 <div class="form-group">
                     <span id="SpiralGapLabel" class="label label-default">Gap of 100 between each revolution of the spiral</span></h3>
                   </div>
                 <div class="form-group">
                   <label for="number">Number of points:</label>
-                  <input type="number" class="form-control" id="Points" name="Revolutions" value="50">
+                  <input type="number" min="1" max="5000" class="form-control" id="Points" name="Revolutions" value="50">
                 </div>
                 <div class="form-group">
                   <span id="DegreeIncrementLabel" class="label label-default">Point every 14.4 degrees</span></h3>
