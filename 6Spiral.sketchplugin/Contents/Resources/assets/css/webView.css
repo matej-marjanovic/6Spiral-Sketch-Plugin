@@ -19,3 +19,11 @@ html {
   user-select: none;
 }
 
+#bootstrap-overrides .label-spiral {
+  margin-top: 3pt;
+}
+
+#bootstrap-overrides h2 {
+  margin-top: 15pt;
+  margin-bottom: 12pt;
+}

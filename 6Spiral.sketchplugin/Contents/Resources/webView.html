@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="assets/css/webView.css">
 </head>
 
-<body>
+<body id="bootstrap-overrides">
 
   <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WS73SFG"
@@ -39,68 +39,66 @@
       <div role="tabpanel" class="active tab-pane" id="1">
 
           <div class="container my-form">
-              <h2>Create a Spiral</h2>
+            <h2>Set Parameters for Spiral</h2>
               <form>
-                <div class="form-group col-sm">
-                  <label for="number">Inner Radius:</label>
-                  <input type="number" min="0" max="50000" class="form-control" id="InnerRadius" name="InnerRadius" value="100">
+                <div class="row">
+                    <div class="form-group col-xs-6">
+                        <label for="number">Inner Radius:</label>
+                        <input type="number" min="0" max="50000" class="form-control" id="InnerRadius" name="InnerRadius" value="100">
+                      </div>
+                      <div class="form-group col-xs-6">
+                          <label for="number">Outer Radius:</label>
+                          <input type="number" min ="0" max="100000" class="form-control" id="OuterRadius" name="OuterRadius" value="300">
+                      </div>
                 </div>
-                <div class="form-group col-sm">
-                    <label for="number">Outer Radius:</label>
-                    <input type="number" min ="0" max="100000" class="form-control" id="OuterRadius" name="OuterRadius" value="300">
-                </div>
-                <div class="form-group">
-                    <label for="number">Revolutions in degrees:</label>
-                    <input type="number" class="form-control" id="Degrees" name="Revolutions" value="720">
-                  </div>
-                <div class="form-group">
-                    <label for="number">Total revolutions:</label>
-                    <input type="number" class="form-control" id="Revolutions" name="Revolutions" value="2">
-                </div>
-                <div class="form-group">
-                    <span id="SpiralGapLabel" class="label label-default">Gap of 100 between each revolution of the spiral</span></h3>
-                  </div>
-                <div class="form-group">
-                  <label for="number">Number of points:</label>
-                  <input type="number" min="1" max="5000" class="form-control" id="Points" name="Revolutions" value="50">
-                </div>
-                <div class="form-group">
-                  <span id="DegreeIncrementLabel" class="label label-default">Point every 14.4 degrees</span></h3>
-                </div>
-        
-                <div class="form-group">
-                  <div class="input-group">
-                    <span class="input-group-addon">
-                      <input type="checkbox" aria-label="...">
-                    </span>
-                    <p class="form-control">Round points</p>
-                  </div>
-                </div>
-        
-                <div class="well well-sm">
-                    <input type="checkbox" aria-label="...">
-                    <span> Round Points</span>
-                </div>
-                <div class="well well-sm">
-                    <input type="checkbox" aria-label="...">
-                    <span> Include Center Point</span>
-                </div>
-        
-                <button id="spiral-button-1" type="submit" class="btn btn-default">Make Spiral!</button>
-              </form>
-          </div>
 
+                
+
+                <div class="form-group">
+                    <label for="number">Rotation in degrees and full rotations:</label>
+                  <div class="input-group">
+                    <span class="input-group-addon">Degrees</span>
+                    <input type="number" class="form-control" id="Degrees" name="Degrees" value="720">
+                    <span class="input-group-addon">Rotations</span>
+                    <input type="number" class="form-control" id="Revolutions" name="Revolutions" value="2">
+                  </div>
+                  <div class="label-spiral">
+                    <span id="SpiralGapLabel" class="label label-default">Gap of 100 after each rotation of the spiral.</span></h3>
+                  </div>
+                </div>
+                <div class="form-group">
+                </div>
+
+                
+
+                <div class="form-group">
+                    <label for="number">Number of points:</label>
+                  <div class="input-group">
+                    <input type="number" min="1" max="5000" class="form-control" id="Points" name="num_of_points" value="50">
+                    <span class="input-group-addon">
+                        <input type="checkbox" aria-label="...">
+                        <span>Add Center Point</span>
+                    </span>
+                  </div>
+                  <div class="label-spiral">
+                    <span id="DegreeIncrementLabel" class="label label-default">Point every 14.4 degrees.</span></h3>
+                  </div>
+                </div>
+              </form>
+
+              
+              
+              <button id="spiral-button-1" class="btn btn-block btn-primary">Make Spiral!</button>
+          </div>
       </div>
+
+
       <div role="tabpanel" class="tab-pane" id="2">
         <p>TODO: Logarithmic Spiral</p>
-
-        
-
       </div>
+
+
     </div>
-
-
-
 
 
   <script src="assets/js/webView.js"></script>
