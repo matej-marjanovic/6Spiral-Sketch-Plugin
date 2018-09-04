@@ -8,6 +8,7 @@ var layer2;
 var spiralObjectID;
 var currentPage;
 var pageLayers;
+var debugMode = true;
 
 function onRun(context) {
   doc = context.document;
@@ -79,37 +80,37 @@ function onRun(context) {
 
       // Parse the hash's JSON content
       var data = JSON.parse(hash);
-      log(data);
+      superDebug("DATA", data);
 
       if (data.hasOwnProperty('spiral')) {
         // Make a SPIRAL.
-        log("SPIRAL DEBUG // PRESSED MAKE SPIRAL BUTTON!!!");
-        log("SPIRAL DEBUG // " + selectedLayers);
-        log("SPIRAL DEBUG // " + selectedCount);
-        log("SPIRAL DEBUG // DRAW" + context.document.contentDrawView());
+        superDebug("PRESSED MAKE SPIRAL BUTTON", " ");
+        superDebug("selectedLayers", selectedLayers);
+        superDebug("selectedCount", selectedCount);
+        superDebug("contentDrawView", context.document.contentDrawView());
+
         if(selectedCount != 0) {
-            log("SPIRAL DEBUG // Layer " + layer);
-            log("SPIRAL DEBUG // Layer " + layer.toString());
+            superDebug("Layer", layer);
+            superDebug("Layer", layer.toString());
             //check that this layer is a shape
             if (layer && layer.isKindOfClass(MSShapeGroup)) {
 
                 // layer.select_byExtendingSelection(true, false);
 
-                log("SPIRAL DEBUG // addSpiral layer " + layer);
+                superDebug("addSpiral layer ", layer);
                 addSpiral(layer, data);
                 pageLayers = currentPage.layers();
         
                 //group and name new group
-                log("SPIRAL DEBUG // STARTED MAKING GROUP");
+                // superDebug("STARTED MAKING GROUP", " ");
                 // var groupAction = doc.actionsController().actionForID("MSGroupAction");
                 // groupAction.group(nil);
                 // gr = layer.parentGroup();
                 // gr.setName('Spiral Group');
-
-                log("SPIRAL DEBUG // FINISHED MAKING GROUP");
+                // superDebug("FINISHED MAKING GROUP", " ");
         
             } else {
-              log("SPIRAL DEBUG // DIDNT MAKE SPIRAL");
+              superDebug("DIDNT MAKE SPIRAL", " ");
               doc.showMessage('Oops, not a path.😅 ');
             }
     
@@ -144,20 +145,15 @@ function onRun(context) {
 
 function addSpiral(layer, data) {
 
-  log("SPIRAL DEBUG // Started addSpiral");
-
-  // if(spiralObjectID) {
-  //   log("SPIRAL DEBUG // SPIRAL OBJECT EXISTS" + spiralObjectID);
-  //   var spiralLayer = pageLayers.layersWithIDs([spiralObjectID.toString()]);
-  // }
+  superDebug("Started addSpiral", " ");
 
   if(spiralObjectID) {
     if(spiralObjectID.toString() == layer2.objectID().toString()) {
-      log("SPIRAL DEBUG // LAYER MATCHES PREVIOUS");
+      superDebug("LAYER MATCHES PREVIOUS", " ");
       layer2.removeFromParent();
     } else {
-      log("SPIRAL DEBUG // SAVED SPIRAL ID" + spiralObjectID.toString());
-      log("SPIRAL DEBUG // CURRENT LAYER ID" + layer.objectID().toString());
+      superDebug("SAVED SPIRAL ID", spiralObjectID.toString());
+      superDebug("CURRENT LAYER ID", layer.objectID().toString());
     }
   }
 
@@ -165,15 +161,22 @@ function addSpiral(layer, data) {
   var outerR = parseInt(data.outerRadius);
   var degrees = parseInt(data.degrees);
   var points = parseInt(data.points);
+  var shouldMakeHelix = data.shouldMakeHelix;
+  var helixPointOffsetX = parseFloat(data.helixPointOffsetX);
+  var helixPointOffsetY = parseFloat(data.helixPointOffsetY);
+
+
 
   // final outer R is 93.2 now (50 + 54 * 0.8)
   // (93.2 - 50) / 54
   var pointDistanceIncrement = (outerR - innerR)/(points);
 
-  log("SPIRAL DEBUG // Making Spiral");
-  log("SPIRAL DEBUG // " + pointDistanceIncrement);
-  log("SPIRAL DEBUG // " + data.innerRadius);
-  log("SPIRAL DEBUG // " + data.outerRadius);
+  superDebug("Making Spiral", " ");
+  superDebug("innerRadius", data.innerRadius);
+  superDebug("outerRadius", data.outerRadius);
+  superDebug("shouldMakeHelix", shouldMakeHelix); 
+  superDebug("helixPointOffsetY", helixPointOffsetY); 
+
 
   var spiralPath = NSBezierPath.bezierPath();
   spiralPath.moveToPoint(NSMakePoint(0, 0));
@@ -181,7 +184,7 @@ function addSpiral(layer, data) {
   for (var i = 0; i <= points; i++) {
 
     var pointLength = innerR + i * pointDistanceIncrement;
-    log('SPIRAL DEBUG // pointLength: ' + pointLength);
+    superDebug("pointLength", pointLength);
 
     // var zigZag = false;
     // var lengthChange = 0;
@@ -199,8 +202,12 @@ function addSpiral(layer, data) {
     pointLength = pointLength;
     var pointX = pointLength * Math.cos(pointAngle * (Math.PI / 180));
     var pointY = pointLength * Math.sin(pointAngle * (Math.PI / 180));
-    log('SPIRAL DEBUG // Point X: ' + pointX + ' Point Y: ' + pointY);
-    log('SPIRAL DEBUG // pointLength: ' + pointLength);
+    superDebug('Point X: ' + pointX + ' Point Y: ' + pointY, " ");
+    superDebug('pointLength', pointLength);
+
+    if(shouldMakeHelix) {
+      pointY = pointY + i * helixPointOffsetY;
+    }
 
     spiralPath.lineToPoint(NSMakePoint(pointX, pointY));
   }
@@ -210,9 +217,9 @@ function addSpiral(layer, data) {
   var spiralShape = MSShapeGroup.shapeWithBezierPath(spiralPath);
 
   spiralObjectID = spiralShape.objectID();
-  log("SPIRAL DEBUG // Set SPIRAL OBJECT ID " + typeof spiralObjectID);
-  log("SPIRAL DEBUG // Set SPIRAL OBJECT ID " + spiralObjectID.toString());
-  log("SPIRAL DEBUG // Set SPIRAL OBJECT ID " + spiralObjectID);
+  superDebug("Set SPIRAL OBJECT ID", typeof spiralObjectID);
+  superDebug("Set SPIRAL OBJECT ID", spiralObjectID.toString());
+  superDebug("Set SPIRAL OBJECT ID", spiralObjectID);
 
 
   var lineThickness = layer.style().borders().objectAtIndex(0).thickness();
@@ -234,17 +241,16 @@ function addSpiral(layer, data) {
   var gr = layer.parentGroup();
   var grFrame = gr.frame();
 
-  log("SPIRAL DEBUG // grFrame " + grFrame.toString());
+  superDebug("grFrame", grFrame.toString());
 
   spiralShape.frame().x = (layer.frame().x() + (layer.frame().width()/2.0)) + (spiralShape.frame().x());
   spiralShape.frame().y = (layer.frame().y() + (layer.frame().height()/2.0)) + (spiralShape.frame().y());
 
   gr.addLayers([spiralShape]);
   // spiralShape.select_byExtendingSelection(true, true);
-
   spiralShape.select_byExtendingSelection(true, true);
 
-  log("SPIRAL DEBUG // Completed Making Spiral")
+  superDebug("Completed Making Spiral", "");
 }
 
 var onSelectionChanged = function(context) {
@@ -261,25 +267,32 @@ var onSelectionChanged = function(context) {
 
     var selection = context.actionContext.document.selectedLayers().layers();
     selectedCount = selection.length;
-    log("SPIRAL DEBUG // onSelectionChanged selection " + selection.toString());
+    superDebug("onSelectionChanged selection", selection.toString());
 
     if(selectedCount != 0) {
       layer = selection[0];
-      log("SPIRAL DEBUG LAYER // " + layer.toString());
-      log("SPIRAL DEBUG // onSelectionChanged frame " + selection[0].frame().toString());
+      superDebug("LAYER", layer.toString());
+      superDebug("onSelectionChanged frame", selection[0].frame().toString());
       //check that this layer is a shape
       if (layer && layer.isKindOfClass(MSShapeGroup)) {
 
-          log("SPIRAL DEBUG // onSelectionChanged MSShapeGroup found");
+        superDebug("onSelectionChanged MSShapeGroup found", " ");
   
       } else {
-        log("SPIRAL DEBUG // NOT FOUND onSelectionChanged MSShapeGroup");
+        superDebug("NOT FOUND onSelectionChanged MSShapeGroup", " ");
         context.actionContext.document.showMessage('Need to select shape for 🌀6Spiral.');
       }
     }
     if(selectedCount == 2) {
       layer2 =selection[1];
-      log("SPIRAL LAYER2 // " + layer2.toString());
+      superDebug("LAYER2", layer2.toString());
     }
   }
 };
+
+
+function superDebug(lbl, val) {
+  if(debugMode) {
+    log("SKETCH 6SPIRAL - " + lbl + ": " + val);  
+  }
+}
