@@ -4,11 +4,17 @@ var doc;
 var selectedLayers;
 var selectedCount;
 var layer;
+var layer2;
+var spiralObjectID;
+var currentPage;
+var pageLayers;
 
 function onRun(context) {
   doc = context.document;
   selectedLayers = context.selection;
   selectedCount = selectedLayers.count();
+  currentPage = doc.currentPage();
+  pageLayers = currentPage.layers();
 
   var panelWidth = 400; // original 80
   var panelHeight = 600; // original 240
@@ -87,10 +93,11 @@ function onRun(context) {
             //check that this layer is a shape
             if (layer && layer.isKindOfClass(MSShapeGroup)) {
 
-                layer.select_byExtendingSelection(true, false);
+                // layer.select_byExtendingSelection(true, false);
 
                 log("SPIRAL DEBUG // addSpiral layer " + layer);
                 addSpiral(layer, data);
+                pageLayers = currentPage.layers();
         
                 //group and name new group
                 log("SPIRAL DEBUG // STARTED MAKING GROUP");
@@ -138,6 +145,21 @@ function onRun(context) {
 function addSpiral(layer, data) {
 
   log("SPIRAL DEBUG // Started addSpiral");
+
+  // if(spiralObjectID) {
+  //   log("SPIRAL DEBUG // SPIRAL OBJECT EXISTS" + spiralObjectID);
+  //   var spiralLayer = pageLayers.layersWithIDs([spiralObjectID.toString()]);
+  // }
+
+  if(spiralObjectID) {
+    if(spiralObjectID.toString() == layer2.objectID().toString()) {
+      log("SPIRAL DEBUG // LAYER MATCHES PREVIOUS");
+      layer2.removeFromParent();
+    } else {
+      log("SPIRAL DEBUG // SAVED SPIRAL ID" + spiralObjectID.toString());
+      log("SPIRAL DEBUG // CURRENT LAYER ID" + layer.objectID().toString());
+    }
+  }
 
   var innerR = parseInt(data.innerRadius);
   var outerR = parseInt(data.outerRadius);
@@ -187,6 +209,11 @@ function addSpiral(layer, data) {
   spiralPath = MSPath.pathWithBezierPath(spiralPath);
   var spiralShape = MSShapeGroup.shapeWithBezierPath(spiralPath);
 
+  spiralObjectID = spiralShape.objectID();
+  log("SPIRAL DEBUG // Set SPIRAL OBJECT ID " + typeof spiralObjectID);
+  log("SPIRAL DEBUG // Set SPIRAL OBJECT ID " + spiralObjectID.toString());
+  log("SPIRAL DEBUG // Set SPIRAL OBJECT ID " + spiralObjectID);
+
 
   var lineThickness = layer.style().borders().objectAtIndex(0).thickness();
   var scale = 1 + (lineThickness / 5);
@@ -213,6 +240,8 @@ function addSpiral(layer, data) {
   spiralShape.frame().y = (layer.frame().y() + (layer.frame().height()/2.0)) + (spiralShape.frame().y());
 
   gr.addLayers([spiralShape]);
+  // spiralShape.select_byExtendingSelection(true, true);
+
   spiralShape.select_byExtendingSelection(true, true);
 
   log("SPIRAL DEBUG // Completed Making Spiral")
@@ -247,6 +276,10 @@ var onSelectionChanged = function(context) {
         log("SPIRAL DEBUG // NOT FOUND onSelectionChanged MSShapeGroup");
         context.actionContext.document.showMessage('Need to select shape for 🌀6Spiral.');
       }
+    }
+    if(selectedCount == 2) {
+      layer2 =selection[1];
+      log("SPIRAL LAYER2 // " + layer2.toString());
     }
   }
 };
