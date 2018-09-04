@@ -162,6 +162,8 @@ function addSpiral(layer, data) {
   var outerR = parseInt(data.outerRadius);
   var degrees = parseInt(data.degrees);
   var points = parseInt(data.points);
+  var lineWidth = parseFloat(data.lineWidth);
+
   var shouldMakeHelix = data.shouldMakeHelix;
   var helixPointOffsetX = parseFloat(data.helixPointOffsetX);
   var helixPointOffsetY = parseFloat(data.helixPointOffsetY);
@@ -236,6 +238,8 @@ function addSpiral(layer, data) {
 
   var border = spiralShape.style().addStylePartOfType(1);
   border.color = MSImmutableColor.colorWithSVGString("#979797");
+  superDebug("line width", lineWidth);
+  border.thickness = lineWidth;
 
   //add to layer
   spiralShape.setName('SPIRALshape');

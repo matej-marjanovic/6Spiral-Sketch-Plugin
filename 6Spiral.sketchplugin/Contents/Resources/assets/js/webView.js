@@ -10,6 +10,7 @@ var outerR = document.getElementById('OuterRadius');
 var degrees = document.getElementById('Degrees');
 var revolutions = document.getElementById('Revolutions');
 var points = document.getElementById('Points');
+var lineWidth = document.getElementById('lineWidth');
 var degreeIncrementLabel = document.getElementById('DegreeIncrementLabel');
 var spiralGapLabel = document.getElementById('SpiralGapLabel');
 
@@ -78,6 +79,7 @@ updateSpiralButton.addEventListener('click',function(){
     "outerRadius": Math.round(outerR.value),
     "degrees": Math.round(degrees.value),
     "points": Math.round(points.value),
+    "lineWidth": lineWidth.value,
     "shouldMakeHelix": shouldMakeHelixCheckbox.checked,
     "helixPointOffsetX": helixPointOffsetX.value,
     "helixPointOffsetY": helixPointOffsetY.value,

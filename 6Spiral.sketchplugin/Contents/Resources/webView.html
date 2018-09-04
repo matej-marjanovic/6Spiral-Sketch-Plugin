@@ -73,13 +73,25 @@
 
                 
                 <div class="form-group">
-                    <div class="input-group">
-                        <span class="input-group-addon">Number of points:</span>
-                        <input type="number" min="1" max="5000" class="form-control" id="Points" name="num_of_points" value="50">
-                    </div>
-                  <div class="label-spiral">
-                    <span id="DegreeIncrementLabel" class="label label-default">Point every 14.4 degrees.</span></h3>
-                  </div>
+
+                    <div class="row">
+                        <div class="form-group col-xs-6">
+                          <div class="input-group">
+                            <span class="input-group-addon"># of points:</span>
+                            <input type="number" min="1" max="5000" class="form-control" id="Points" name="num_of_points" value="50">
+                          </div>
+                          <div class="label-spiral">
+                              <span id="DegreeIncrementLabel" class="label label-default">Point every 14.4 degrees.</span></h3>
+                          </div>
+                        </div>
+                        <div class="form-group col-xs-6">
+                          <div class="input-group">
+                              <span class="input-group-addon">Line width</span>
+                              <input type="number" class="form-control" id="lineWidth" name="lineWidth" value="5">
+                            </div>
+                        </div>
+                    </div> <!-- END of ROW -->
+
                 </div>
               </form>
             
@@ -123,7 +135,7 @@
                 <label for="number">Set percevied angle (width/height ratio) for helix:</label>
               <div class="input-group">
                 <span class="input-group-addon">H/W ratio</span>
-                <input type="number" class="form-control" id="hWRatio" name="hwRatio" value="0.5">
+                <input type="number" class="form-control" id="hWRatio" name="hwRatio" value="0.7071">
                 <span class="input-group-addon">Isometric Angle</span>
                 <input type="number" class="form-control" id="isoAngle" name="isoAngle" value="45">
               </div>
