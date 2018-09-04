@@ -13,6 +13,13 @@ var points = document.getElementById('Points');
 var degreeIncrementLabel = document.getElementById('DegreeIncrementLabel');
 var spiralGapLabel = document.getElementById('SpiralGapLabel');
 
+var continouslyUpdateCheckbox = document.getElementById('continouslyUpdateCheckbox');
+var updateSpiralButton = document.getElementById('spiral-button-1');
+
+var shouldMakeHelixCheckbox = document.getElementById('helixCheckbox');
+var helixPointOffsetX = document.getElementById('xOffset');
+var helixPointOffsetY = document.getElementById('yOffset');
+
 innerR.addEventListener('input', function (evt) {
   setSpiralGapLabel();
 });
@@ -40,6 +47,18 @@ points.addEventListener('input', function (evt) {
   setDegreeIncrementLabel();
 });
 
+continouslyUpdateCheckbox.addEventListener('click', function (evt) {
+  if(continouslyUpdateCheckbox.checked) {
+    updateSpiralButton.disabled = true;
+    updateSpiralButton.classList.add("disabled");
+    console.log("Button disabled");
+  } else {
+    updateSpiralButton.disabled = false;
+    updateSpiralButton.classList.remove("disabled");
+    console.log("Button enabled");
+  }
+});
+
 function setDegreeIncrementLabel() {
   var degreeIncrement = degrees.value/(Math.floor(points.value));
   degreeIncrementLabel.innerHTML = "Point every " + degreeIncrement.toFixed(2) + " degrees";
@@ -50,7 +69,7 @@ function setSpiralGapLabel() {
   spiralGapLabel.innerHTML = "Gap of " + spiralGap.toFixed(2) + " after each rotation of the spiral";
 }
 
-document.getElementById('spiral-button-1').addEventListener('click',function(){
+updateSpiralButton.addEventListener('click',function(){
   console.log('SPIRAL DEBUG // Spiral Button Clicked');
   // Create JSON object with the action we want to trigger and the current UNIX date
   var data = {
@@ -59,8 +78,12 @@ document.getElementById('spiral-button-1').addEventListener('click',function(){
     "outerRadius": Math.round(outerR.value),
     "degrees": Math.round(degrees.value),
     "points": Math.round(points.value),
+    "shouldMakeHelix": shouldMakeHelixCheckbox.checked,
+    "helixPointOffsetX": helixPointOffsetX.value,
+    "helixPointOffsetY": helixPointOffsetY.value,
     "date": new Date().getTime()
   }
+
   console.log(data);
   console.log(JSON.stringify(data));
   // Put the JSON as a string in the hash

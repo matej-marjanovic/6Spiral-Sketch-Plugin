@@ -27,3 +27,16 @@ html {
   margin-top: 15pt;
   margin-bottom: 12pt;
 }
+
+#bootstrap-overrides .helix-settings {
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 5px;
+  padding-bottom: 0px;
+  margin-bottom: 10px;
+  border-color: #888888;
+}
+
+#bootstrap-overrides .helix-settings #last-helix-setting{
+  margin-bottom: 0px;
+}

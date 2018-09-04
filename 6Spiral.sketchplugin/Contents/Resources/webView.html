@@ -41,10 +41,12 @@
           <div class="container my-form">
             <h2>Set Parameters for Spiral</h2>
               <form>
+
                 <div class="row">
                     <div class="form-group col-xs-6">
                         <label for="number">Inner Radius:</label>
                         <input type="number" min="0" max="50000" class="form-control" id="InnerRadius" name="InnerRadius" value="100">
+                        
                       </div>
                       <div class="form-group col-xs-6">
                           <label for="number">Outer Radius:</label>
@@ -70,25 +72,66 @@
                 </div>
 
                 
-
                 <div class="form-group">
-                    <label for="number">Number of points:</label>
-                  <div class="input-group">
-                    <input type="number" min="1" max="5000" class="form-control" id="Points" name="num_of_points" value="50">
-                    <span class="input-group-addon">
-                        <input type="checkbox" aria-label="...">
-                        <span>Add Center Point</span>
-                    </span>
-                  </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">Number of points:</span>
+                        <input type="number" min="1" max="5000" class="form-control" id="Points" name="num_of_points" value="50">
+                    </div>
                   <div class="label-spiral">
                     <span id="DegreeIncrementLabel" class="label label-default">Point every 14.4 degrees.</span></h3>
                   </div>
                 </div>
               </form>
+            
+            <div class="row">
+              <div class="form-group col-xs-6">
+                  <div class="well well-sm">
+                    <input type="checkbox" id="continouslyUpdateCheckbox" checked="true" aria-label="...">
+                    <span>Continously Update</span>
+                  </div>
+              </div>
+              <div class="form-group col-xs-6">
+                <button id="spiral-button-1" class="btn btn-block btn-primary disabled">Update Spiral</button>
+              </div>
+            </div>
 
-              
-              
-              <button id="spiral-button-1" class="btn btn-block btn-primary">Make Spiral!</button>
+
+            <div class="helix-settings">
+
+                <div class="well well-sm">
+                  <input type="checkbox" id="helixCheckbox" aria-label="...">
+                  <span> Make helix from Spiral</span>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xs-6">
+                      <div class="input-group">
+                        <span class="input-group-addon">Total Δx</span>
+                        <input type="number" class="form-control" id="xOffset" name="xOffset" value="0">
+                      </div>
+                    </div>
+                    <div class="form-group col-xs-6">
+                      <div class="input-group">
+                          <span class="input-group-addon">Total Δy</span>
+                          <input type="number" class="form-control" id="yOffset" name="yOffset" value="100">
+                        </div>
+                    </div>
+                </div> <!-- END of ROW -->
+
+
+            <div class="form-group" id="last-helix-setting">
+                <label for="number">Set percevied angle (width/height ratio) for helix:</label>
+              <div class="input-group">
+                <span class="input-group-addon">H/W ratio</span>
+                <input type="number" class="form-control" id="hWRatio" name="hwRatio" value="0.5">
+                <span class="input-group-addon">Isometric Angle</span>
+                <input type="number" class="form-control" id="isoAngle" name="isoAngle" value="45">
+              </div>
+            </div>
+          
+          </div> <!-- END of Helix Settings -->
+
+
           </div>
       </div>
 
