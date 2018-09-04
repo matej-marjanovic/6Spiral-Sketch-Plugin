@@ -165,8 +165,14 @@ function addSpiral(layer, data) {
   var lineWidth = parseFloat(data.lineWidth);
 
   var shouldMakeHelix = data.shouldMakeHelix;
-  var helixPointOffsetX = parseFloat(data.helixPointOffsetX);
-  var helixPointOffsetY = parseFloat(data.helixPointOffsetY);
+  var helixOffsetX = parseFloat(data.helixOffsetX);
+  var helixOffsetY = parseFloat(data.helixOffsetY);
+  var helixHWRatio = parseFloat(data.helixHWRatio);
+  superDebug("helixHWRatio", helixHWRatio);
+
+
+  var helixPointOffsetX = helixOffsetX/points;
+  var helixPointOffsetY = helixOffsetY/points;
 
 
   // final outer R is 93.2 now (50 + 54 * 0.8)
@@ -208,6 +214,7 @@ function addSpiral(layer, data) {
     superDebug('pointLength', pointLength);
 
     if(shouldMakeHelix) {
+      pointY = pointY * helixHWRatio;
       pointY = pointY + i * helixPointOffsetY;
     }
 

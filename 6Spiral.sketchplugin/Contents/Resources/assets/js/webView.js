@@ -18,8 +18,10 @@ var continouslyUpdateCheckbox = document.getElementById('continouslyUpdateCheckb
 var updateSpiralButton = document.getElementById('spiral-button-1');
 
 var shouldMakeHelixCheckbox = document.getElementById('helixCheckbox');
-var helixPointOffsetX = document.getElementById('xOffset');
-var helixPointOffsetY = document.getElementById('yOffset');
+var helixOffsetX = document.getElementById('xOffset');
+var helixOffsetY = document.getElementById('yOffset');
+var helixHWRatio = document.getElementById('helixHWRatio');
+var helixIsoAngle = document.getElementById('helixIsoAngle');
 
 innerR.addEventListener('input', function (evt) {
   setSpiralGapLabel();
@@ -60,6 +62,18 @@ continouslyUpdateCheckbox.addEventListener('click', function (evt) {
   }
 });
 
+
+helixHWRatio.addEventListener('input', function (evt) {
+  console.log(this.value);
+  helixIsoAngle.value = ((Math.acos(this.value))*(180 / Math.PI)).toFixed(1);
+});
+
+helixIsoAngle.addEventListener('input', function (evt) {
+  console.log(this.value);
+  helixHWRatio.value = Math.cos(this.value * (Math.PI / 180)).toFixed(3);
+});
+
+
 function setDegreeIncrementLabel() {
   var degreeIncrement = degrees.value/(Math.floor(points.value));
   degreeIncrementLabel.innerHTML = "Point every " + degreeIncrement.toFixed(2) + " degrees";
@@ -81,10 +95,13 @@ updateSpiralButton.addEventListener('click',function(){
     "points": Math.round(points.value),
     "lineWidth": lineWidth.value,
     "shouldMakeHelix": shouldMakeHelixCheckbox.checked,
-    "helixPointOffsetX": helixPointOffsetX.value,
-    "helixPointOffsetY": helixPointOffsetY.value,
+    "helixOffsetX": helixOffsetX.value,
+    "helixOffsetY": helixOffsetY.value,
+    "helixHWRatio": helixHWRatio.value,
     "date": new Date().getTime()
   }
+
+  // helixPointOffsetX
 
   console.log(data);
   console.log(JSON.stringify(data));
