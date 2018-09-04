@@ -18,7 +18,7 @@ function onRun(context) {
   pageLayers = currentPage.layers();
 
   var panelWidth = 400; // original 80
-  var panelHeight = 600; // original 240
+  var panelHeight = 700; // original 240
 
   // Create an NSThread dictionary with a specific identifier
   var threadDictionary = NSThread.mainThread().threadDictionary();
@@ -81,6 +81,7 @@ function onRun(context) {
       // Parse the hash's JSON content
       var data = JSON.parse(hash);
       superDebug("DATA", data);
+      superDebug("DATA", JSON.stringify(data));
 
       if (data.hasOwnProperty('spiral')) {
         // Make a SPIRAL.
@@ -166,7 +167,6 @@ function addSpiral(layer, data) {
   var helixPointOffsetY = parseFloat(data.helixPointOffsetY);
 
 
-
   // final outer R is 93.2 now (50 + 54 * 0.8)
   // (93.2 - 50) / 54
   var pointDistanceIncrement = (outerR - innerR)/(points);
@@ -208,6 +208,7 @@ function addSpiral(layer, data) {
     if(shouldMakeHelix) {
       pointY = pointY + i * helixPointOffsetY;
     }
+
 
     spiralPath.lineToPoint(NSMakePoint(pointX, pointY));
   }
