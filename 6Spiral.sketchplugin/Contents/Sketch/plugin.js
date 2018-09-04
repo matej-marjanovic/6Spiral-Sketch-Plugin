@@ -238,7 +238,6 @@ function addSpiral(layer, data) {
 
   var border = spiralShape.style().addStylePartOfType(1);
   border.color = MSImmutableColor.colorWithSVGString("#979797");
-  superDebug("line width", lineWidth);
   border.thickness = lineWidth;
 
   //add to layer
