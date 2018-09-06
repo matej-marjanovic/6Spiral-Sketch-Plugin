@@ -8,7 +8,7 @@
 var innerR = document.getElementById('InnerRadius');
 var outerR = document.getElementById('OuterRadius');
 var degrees = document.getElementById('Degrees');
-var revolutions = document.getElementById('Revolutions');
+var rotations = document.getElementById('Rotations');
 var points = document.getElementById('Points');
 var lineWidth = document.getElementById('lineWidth');
 var degreeIncrementLabel = document.getElementById('DegreeIncrementLabel');
@@ -23,31 +23,56 @@ var helixOffsetY = document.getElementById('yOffset');
 var helixHWRatio = document.getElementById('helixHWRatio');
 var helixIsoAngle = document.getElementById('helixIsoAngle');
 
+window.onload = function() {
+  updateSpiral();
+};
+
 innerR.addEventListener('input', function (evt) {
   setSpiralGapLabel();
+  if(continouslyUpdateCheckbox.checked) {
+    updateSpiral();
+  }
 });
 
 outerR.addEventListener('input', function (evt) {
   setSpiralGapLabel();
+  if(continouslyUpdateCheckbox.checked) {
+    updateSpiral();
+  }
 });
 
-revolutions.addEventListener('input', function (evt) {
+rotations.addEventListener('input', function (evt) {
   console.log(this.value);
   degrees.value = this.value*360;
   setDegreeIncrementLabel();
   setSpiralGapLabel();
+  if(continouslyUpdateCheckbox.checked) {
+    updateSpiral();
+  }
 });
 
 degrees.addEventListener('input', function (evt) {
   console.log(this.value);
-  revolutions.value = this.value/360;
+  rotations.value = this.value/360;
   setDegreeIncrementLabel();
   setSpiralGapLabel();
+  if(continouslyUpdateCheckbox.checked) {
+    updateSpiral();
+  }
 });
 
 points.addEventListener('input', function (evt) {
   console.log(this.value);
   setDegreeIncrementLabel();
+  if(continouslyUpdateCheckbox.checked) {
+    updateSpiral();
+  }
+});
+
+lineWidth.addEventListener('input', function (evt) {
+  if(continouslyUpdateCheckbox.checked) {
+    updateSpiral();
+  }
 });
 
 continouslyUpdateCheckbox.addEventListener('click', function (evt) {
@@ -62,15 +87,44 @@ continouslyUpdateCheckbox.addEventListener('click', function (evt) {
   }
 });
 
+updateSpiralButton.addEventListener('click',function(){
+  console.log('SPIRAL DEBUG // Spiral Button Clicked');
+  updateSpiral();
+  return false;
+});
+
+shouldMakeHelixCheckbox.addEventListener('click', function (evt) {
+  if(continouslyUpdateCheckbox.checked) {
+    updateSpiral();
+  }
+});
+
+helixOffsetX.addEventListener('input', function (evt) {
+  if(continouslyUpdateCheckbox.checked) {
+    updateSpiral();
+  }
+});
+
+helixOffsetY.addEventListener('input', function (evt) {
+  if(continouslyUpdateCheckbox.checked) {
+    updateSpiral();
+  }
+});
 
 helixHWRatio.addEventListener('input', function (evt) {
   console.log(this.value);
   helixIsoAngle.value = ((Math.acos(this.value))*(180 / Math.PI)).toFixed(1);
+  if(continouslyUpdateCheckbox.checked) {
+    updateSpiral();
+  }
 });
 
 helixIsoAngle.addEventListener('input', function (evt) {
   console.log(this.value);
   helixHWRatio.value = Math.cos(this.value * (Math.PI / 180)).toFixed(3);
+  if(continouslyUpdateCheckbox.checked) {
+    updateSpiral();
+  }
 });
 
 
@@ -80,12 +134,11 @@ function setDegreeIncrementLabel() {
 }
 
 function setSpiralGapLabel() {
-  var spiralGap = Math.abs(outerR.value - innerR.value) / revolutions.value;
+  var spiralGap = Math.abs(outerR.value - innerR.value) / rotations.value;
   spiralGapLabel.innerHTML = "Gap of " + spiralGap.toFixed(2) + " after each rotation of the spiral";
 }
 
-updateSpiralButton.addEventListener('click',function(){
-  console.log('SPIRAL DEBUG // Spiral Button Clicked');
+function updateSpiral() {
   // Create JSON object with the action we want to trigger and the current UNIX date
   var data = {
     "spiral": "Archimedean Spiral",
@@ -100,12 +153,7 @@ updateSpiralButton.addEventListener('click',function(){
     "helixHWRatio": helixHWRatio.value,
     "date": new Date().getTime()
   }
-
-  // helixPointOffsetX
-
   console.log(data);
-  console.log(JSON.stringify(data));
   // Put the JSON as a string in the hash
   window.location.hash = JSON.stringify(data);
-  return false;
-});
+}
