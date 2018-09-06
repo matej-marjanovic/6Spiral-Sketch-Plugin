@@ -23,6 +23,8 @@ var helixOffsetY = document.getElementById('yOffset');
 var helixHWRatio = document.getElementById('helixHWRatio');
 var helixIsoAngle = document.getElementById('helixIsoAngle');
 
+var debugLogFlag = true;
+
 window.onload = function() {
   updateSpiral();
 };
@@ -42,7 +44,7 @@ outerR.addEventListener('input', function (evt) {
 });
 
 rotations.addEventListener('input', function (evt) {
-  console.log(this.value);
+  debugLog(this.value);
   degrees.value = this.value*360;
   setDegreeIncrementLabel();
   setSpiralGapLabel();
@@ -52,7 +54,7 @@ rotations.addEventListener('input', function (evt) {
 });
 
 degrees.addEventListener('input', function (evt) {
-  console.log(this.value);
+  debugLog(this.value);
   rotations.value = this.value/360;
   setDegreeIncrementLabel();
   setSpiralGapLabel();
@@ -62,7 +64,7 @@ degrees.addEventListener('input', function (evt) {
 });
 
 points.addEventListener('input', function (evt) {
-  console.log(this.value);
+  debugLog(this.value);
   setDegreeIncrementLabel();
   if(continouslyUpdateCheckbox.checked) {
     updateSpiral();
@@ -79,16 +81,16 @@ continouslyUpdateCheckbox.addEventListener('click', function (evt) {
   if(continouslyUpdateCheckbox.checked) {
     updateSpiralButton.disabled = true;
     updateSpiralButton.classList.add("disabled");
-    console.log("Button disabled");
+    debugLog("Button disabled");
   } else {
     updateSpiralButton.disabled = false;
     updateSpiralButton.classList.remove("disabled");
-    console.log("Button enabled");
+    debugLog("Button enabled");
   }
 });
 
 updateSpiralButton.addEventListener('click',function(){
-  console.log('SPIRAL DEBUG // Spiral Button Clicked');
+  debugLog('SPIRAL DEBUG // Spiral Button Clicked');
   updateSpiral();
   return false;
 });
@@ -112,7 +114,7 @@ helixOffsetY.addEventListener('input', function (evt) {
 });
 
 helixHWRatio.addEventListener('input', function (evt) {
-  console.log(this.value);
+  debugLog(this.value);
   helixIsoAngle.value = ((Math.acos(this.value))*(180 / Math.PI)).toFixed(1);
   if(continouslyUpdateCheckbox.checked) {
     updateSpiral();
@@ -120,7 +122,7 @@ helixHWRatio.addEventListener('input', function (evt) {
 });
 
 helixIsoAngle.addEventListener('input', function (evt) {
-  console.log(this.value);
+  debugLog(this.value);
   helixHWRatio.value = Math.cos(this.value * (Math.PI / 180)).toFixed(3);
   if(continouslyUpdateCheckbox.checked) {
     updateSpiral();
@@ -138,7 +140,14 @@ function setSpiralGapLabel() {
   spiralGapLabel.innerHTML = "Gap of " + spiralGap.toFixed(2) + " after each rotation of the spiral";
 }
 
+// Added 100ms timeout to each updated call.
+// Without it, plugin can make a new copy of the spiral on each call
+// if you're changing/incrementing some value really fast.
 function updateSpiral() {
+  setTimeout(function(){ sendSpiralDataToPlugin(); }, 100);
+}
+
+function sendSpiralDataToPlugin() {
   // Create JSON object with the action we want to trigger and the current UNIX date
   var data = {
     "spiral": "Archimedean Spiral",
@@ -153,7 +162,13 @@ function updateSpiral() {
     "helixHWRatio": helixHWRatio.value,
     "date": new Date().getTime()
   }
-  console.log(data);
+  debugLog(data);
   // Put the JSON as a string in the hash
   window.location.hash = JSON.stringify(data);
+}
+
+function debugLog(msg) {
+  if (debugLogFlag) {
+    console.log(msg);
+  }
 }
