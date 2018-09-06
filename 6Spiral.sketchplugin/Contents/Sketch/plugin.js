@@ -216,6 +216,7 @@ function addSpiral(layer, data) {
     if(shouldMakeHelix) {
       pointY = pointY * helixHWRatio;
       pointY = pointY + i * helixPointOffsetY;
+      pointX = pointX + i * helixPointOffsetX;
     }
 
 
