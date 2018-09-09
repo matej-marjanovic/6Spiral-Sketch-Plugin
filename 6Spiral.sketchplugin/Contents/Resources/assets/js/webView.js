@@ -1,9 +1,9 @@
 
 // Commented out so that it's possible to Right Click -> Inspect Element.
 // Disable the context menu
-// document.addEventListener("contextmenu", function(e) {
-//   e.preventDefault();
-// });
+document.addEventListener("contextmenu", function(e) {
+  e.preventDefault();
+});
 
 const SPIRAL_CONSTANTS = {
   SPIRAL_TYPE_ARCHIMEDEAN: 0,
@@ -45,10 +45,8 @@ window.onload = function() {
 spiralType.addEventListener('change', function(evt) {
   if (this.value == "Archimedean Spiral") {
     currentSpiralType = SPIRAL_CONSTANTS.SPIRAL_TYPE_ARCHIMEDEAN;
-    console.log("Archimedean Spiral");
   } else if (this.value == "Logarithmic Spiral") {
     currentSpiralType = SPIRAL_CONSTANTS.SPIRAL_TYPE_LOGARITHIMIC;
-    console.log("Logarithmic Spiral");
   }
   setSpiralGapLabel();
   setLogSpiralMinRadWarningLabel();

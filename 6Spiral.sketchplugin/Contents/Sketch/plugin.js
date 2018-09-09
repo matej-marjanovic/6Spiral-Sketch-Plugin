@@ -69,7 +69,7 @@ function onRun(context) {
   var webView = WebView.alloc().initWithFrame(NSMakeRect(0, 0, panelWidth, panelHeight - 44));
   var request = NSURLRequest.requestWithURL(context.plugin.urlForResourceNamed("webView.html"));
   webView.mainFrame().loadRequest(request);
-  // Commented out so you can Right Click -> Inspect Element
+  // Commented out. Unsure, but may cause issue for using Right Click -> Inspect Element
   // webView.setDrawsBackground(false);
 
   // Access the Web page's JavaScript environment
