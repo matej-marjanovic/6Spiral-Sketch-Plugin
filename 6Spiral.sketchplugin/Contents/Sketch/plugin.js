@@ -241,9 +241,8 @@ function addSpiral(layer, data) {
       spiralPath.lineToPoint(NSMakePoint(pointX, pointY));
     }
   } else if (currentSpiralType == SPIRAL_CONSTANTS.SPIRAL_TYPE_LOGARITHIMIC) {
-    log("MAKE A LOGARITHMIC SPIRAL");
 
-    // For Log Spiral, inner radius can't 0 (log spiral only approaches, never reaches 0). 
+    // For Log Spiral, inner radius can't be 0 (log spiral only approaches, never reaches 0). 
     var a_log = innerR;
     var b_log = (Math.log(outerR/innerR))/(2*Math.PI*(degrees/360.0));
     var degrees_per_point_log = degrees/points;
@@ -349,13 +348,6 @@ var onSelectionChanged = function(context) {
   }
 };
 
-
-function superDebug(lbl, val) {
-  if(debugMode) {
-    log("SKETCH 6SPIRAL - " + lbl + ": " + val);  
-  }
-}
-
 var kUUIDKey = 'google.analytics.uuid'
 var uuid = NSUserDefaults.standardUserDefaults().objectForKey(kUUIDKey)
 if (!uuid) {
@@ -401,4 +393,10 @@ var sendEvent = function (context, category, action, label) {
   payload.ec = category;
   payload.ea = action;
   return index(context, key, 'event', payload);
+}
+
+function superDebug(lbl, val) {
+  if(debugMode) {
+    log("SKETCH 6SPIRAL - " + lbl + ": " + val);  
+  }
 }
