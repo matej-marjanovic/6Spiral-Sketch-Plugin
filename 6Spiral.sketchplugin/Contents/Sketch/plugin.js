@@ -1,5 +1,10 @@
 @import "MochaJSDelegate.js";
 
+const SPIRAL_CONSTANTS = {
+  SPIRAL_TYPE_ARCHIMEDEAN: 0,
+  SPIRAL_TYPE_LOGARITHIMIC: 1
+};
+
 var doc;
 var selectedLayers;
 var selectedCount;
@@ -126,6 +131,7 @@ function onRun(context) {
     
         }
       }
+      // Send info back to webView.js that Spiral has been made.
       windowObject.evaluateWebScript("drawingSpiralCompleted()");
     })
   })
@@ -155,7 +161,6 @@ function onRun(context) {
 }
 
 function addSpiral(layer, data) {
-
   superDebug("Started addSpiral", " ");
 
   if(spiralObjectID) {
@@ -167,8 +172,11 @@ function addSpiral(layer, data) {
       superDebug("CURRENT LAYER ID", layer.objectID().toString());
     }
   }
-
+  var currentSpiralType = parseInt(data.currentSpiralType);
   var innerR = parseInt(data.innerRadius);
+  if (currentSpiralType == SPIRAL_CONSTANTS.SPIRAL_TYPE_LOGARITHIMIC) {
+    innerR = Math.max(innerR, 1.0);
+  }
   var outerR = parseInt(data.outerRadius);
   var degrees = parseInt(data.degrees);
   var points = parseInt(data.points);
@@ -199,39 +207,69 @@ function addSpiral(layer, data) {
   var spiralPath = NSBezierPath.bezierPath();
   spiralPath.moveToPoint(NSMakePoint(0, 0));
 
-  for (var i = 0; i <= points; i++) {
+  if (currentSpiralType == SPIRAL_CONSTANTS.SPIRAL_TYPE_ARCHIMEDEAN) {
+    for (var i = 0; i <= points; i++) {
 
-    var pointLength = innerR + i * pointDistanceIncrement;
-    superDebug("pointLength", pointLength);
-
-    // var zigZag = false;
-    // var lengthChange = 0;
-    // if (zigZag) {
-    //   var lengthChange = pointLength / 10;
-    //   if (i % 2 == 1) {
-    //     lengthChange = -pointLength / 10;
-    //   }
-    // }
-    // var centerToPointLength = Math.sqrt(pointX*pointX+pointY*pointY); // length is defined.
-    // var centerToPointNormalVectorX = pointX / centerToPointLength;
-    // var centerToPointNormalVectorY = pointY / centerToPointLength;
-
-    var pointAngle = i * (degrees/points);
-    pointLength = pointLength;
-    var pointX = pointLength * Math.cos(pointAngle * (Math.PI / 180));
-    var pointY = pointLength * Math.sin(pointAngle * (Math.PI / 180));
-    superDebug('Point X: ' + pointX + ' Point Y: ' + pointY, " ");
-    superDebug('pointLength', pointLength);
-
-    if(shouldMakeHelix) {
-      pointY = pointY * helixHWRatio;
-      pointY = pointY + i * helixPointOffsetY;
-      pointX = pointX + i * helixPointOffsetX;
+      var pointLength = innerR + i * pointDistanceIncrement;
+      superDebug("pointLength", pointLength);
+  
+      // var zigZag = false;
+      // var lengthChange = 0;
+      // if (zigZag) {
+      //   var lengthChange = pointLength / 10;
+      //   if (i % 2 == 1) {
+      //     lengthChange = -pointLength / 10;
+      //   }
+      // }
+      // var centerToPointLength = Math.sqrt(pointX*pointX+pointY*pointY); // length is defined.
+      // var centerToPointNormalVectorX = pointX / centerToPointLength;
+      // var centerToPointNormalVectorY = pointY / centerToPointLength;
+  
+      var pointAngle = i * (degrees/points);
+      var pointX = pointLength * Math.cos(pointAngle * (Math.PI / 180));
+      var pointY = pointLength * Math.sin(pointAngle * (Math.PI / 180));
+      superDebug('Point X: ' + pointX + ' Point Y: ' + pointY, " ");
+      superDebug('pointLength', pointLength);
+  
+      if(shouldMakeHelix) {
+        pointY = pointY * helixHWRatio;
+        pointY = pointY + i * helixPointOffsetY;
+        pointX = pointX + i * helixPointOffsetX;
+      }
+      spiralPath.lineToPoint(NSMakePoint(pointX, pointY));
     }
+  } else if (currentSpiralType == SPIRAL_CONSTANTS.SPIRAL_TYPE_LOGARITHIMIC) {
+    log("MAKE A LOGARITHMIC SPIRAL");
 
+    // For Log Spiral, inner radius can't 0 (log spiral only approaches, never reaches 0). 
+    var a_log = innerR;
+    var b_log = (Math.log(outerR/innerR))/(2*Math.PI*(degrees/360.0));
+    log("SPIRAL b_log: " + b_log);
+    var degrees_per_point_log = degrees/points;
+    var radians_per_point_log = degrees_per_point_log * (Math.PI/180);
 
-    spiralPath.lineToPoint(NSMakePoint(pointX, pointY));
+    for (var i = 0; i <= points; i++) {
+      var pointAngleDeg = i * degrees_per_point_log;
+      var pointAngleRad = i * radians_per_point_log;
+      log('SPIRAL pointAngle ' + pointAngle);
+      var pointLength =  a_log * Math.pow(Math.E, b_log*pointAngleRad);
+      var pointX = pointLength * Math.cos(pointAngleDeg * (Math.PI / 180));
+      var pointY = pointLength * Math.sin(pointAngleDeg * (Math.PI / 180));
+      log('SPIRAL Point X: ' + pointX + ' Point Y: ' + pointY);
+      log('SPIRAL pointLength ' + pointLength);
+
+      if(shouldMakeHelix) {
+        pointY = pointY * helixHWRatio;
+        pointY = pointY + i * helixPointOffsetY;
+        pointX = pointX + i * helixPointOffsetX;
+      }
+
+      spiralPath.lineToPoint(NSMakePoint(pointX, pointY));
+    }
   }
+
+//            a    *            e ^   (b         *  theta)
+//console.log(10 * Math.pow(Math.E, 0.2443118663 * (10*(Math.PI/180))) );
 
   //spiralPath.closePath();
   spiralPath = MSPath.pathWithBezierPath(spiralPath);
@@ -274,6 +312,7 @@ function addSpiral(layer, data) {
 
   superDebug("Completed Making Spiral", "");
 }
+
 
 var onSelectionChanged = function(context) {
   var threadDictionary = NSThread.mainThread().threadDictionary();

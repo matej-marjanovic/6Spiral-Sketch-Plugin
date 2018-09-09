@@ -19,6 +19,10 @@ html {
   user-select: none;
 }
 
+#bootstrap-overrides form {
+  margin-top: 10pt;
+}
+
 #bootstrap-overrides .label-spiral {
   margin-top: 3pt;
 }

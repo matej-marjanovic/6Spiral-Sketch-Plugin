@@ -28,30 +28,29 @@
   <!-- End Google Tag Manager (noscript) -->
 
 
-  <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
-      <li role="presentation" class="active"><a href="#1" aria-controls="1" role="tab" data-toggle="tab">Archimedean Spiral</a></li>
-      <li role="presentation"><a href="#2" aria-controls="2" role="tab" data-toggle="tab">Logarithmic Spiral</a></li>
-    </ul>
-  
-    <!-- Tab panes -->
-    <div class="tab-content">
-      <div role="tabpanel" class="active tab-pane" id="1">
-
           <div class="container my-form">
-            <h3>Set Parameters</h3>
               <form>
+
+                <div class="form-group">
+                  <label for="spiralType">Spiral Type:</label>
+                  <select class="form-control" id="spiralType">
+                    <option value="Archimedean Spiral">Archimedean Spiral</option>
+                    <option value="Logarithmic Spiral">Logarithmic Spiral</option>
+                  </select>
+                </div>
 
                 <div class="row">
                     <div class="form-group col-xs-6">
-                        <label for="number">Inner Radius:</label>
-                        <input type="number" min="0" max="50000" class="form-control" id="InnerRadius" name="InnerRadius" value="100">
-                        
+                      <label for="number">Inner Radius:</label>
+                      <input type="number" min="0" max="50000" class="form-control" id="InnerRadius" name="InnerRadius" value="100">
+                      <div class="label-spiral" id="minLogRadiusWarnLabel" hidden>
+                          <span class="label label-warning">Minimum radius applied to logarithmic spiral can't be less than 1.0.</span></h3>
                       </div>
-                      <div class="form-group col-xs-6">
-                          <label for="number">Outer Radius:</label>
-                          <input type="number" min ="0" max="100000" class="form-control" id="OuterRadius" name="OuterRadius" value="300">
-                      </div>
+                    </div>
+                    <div class="form-group col-xs-6">
+                      <label for="number">Outer Radius:</label>
+                      <input type="number" min ="0" max="100000" class="form-control" id="OuterRadius" name="OuterRadius" value="300">
+                    </div>
                 </div>
 
                 
@@ -118,9 +117,9 @@
                   <label for="number">Set percevied angle (width/height ratio):</label>
                 <div class="input-group">
                     <span class="input-group-addon">Isometric Angle</span>
-                    <input type="number" class="form-control" id="helixIsoAngle" name="helixIsoAngle" value="45">
+                    <input type="number" class="form-control" id="helixIsoAngle" name="helixIsoAngle" value="60">
                   <span class="input-group-addon">H/W ratio</span>
-                  <input type="number" class="form-control" id="helixHWRatio" name="helixHWRatio" value="0.707" step="0.001">
+                  <input type="number" class="form-control" id="helixHWRatio" name="helixHWRatio" value="0.500" step="0.001">
                 </div>
               </div>
             
@@ -130,7 +129,7 @@
             <div class="row mainOptions">
               <div class="form-group col-xs-12">
                   <div class="well well-sm">
-                    <input type="checkbox" id="continouslyUpdateCheckbox" aria-label="...">
+                    <input type="checkbox" id="continouslyUpdateCheckbox" checked aria-label="...">
                     <span>Continously Update</span>
                   </div>
               </div>
@@ -138,7 +137,7 @@
 
             <div class="row">
               <div class="form-group col-xs-6">
-                  <button id="updateSpiralButton" class="btn btn-block btn-primary">Update Spiral</button>
+                  <button id="updateSpiralButton" class="btn btn-block btn-primary disabled">Update Spiral</button>
               </div>
               <div class="form-group col-xs-6">
                   <button id="closePanel" class="btn btn-block btn-default">Done</button>
@@ -150,15 +149,6 @@
             </div>
 
           </div>
-      </div>
-
-
-      <div role="tabpanel" class="tab-pane" id="2">
-        <p>TODO: Logarithmic Spiral</p>
-      </div>
-
-
-    </div>
 
 
   <script src="assets/js/webView.js"></script>

@@ -5,14 +5,23 @@
 //   e.preventDefault();
 // });
 
+const SPIRAL_CONSTANTS = {
+  SPIRAL_TYPE_ARCHIMEDEAN: 0,
+  SPIRAL_TYPE_LOGARITHIMIC: 1
+};
+
+var currentSpiralType = SPIRAL_CONSTANTS.SPIRAL_TYPE_ARCHIMEDEAN;
+
+var spiralType = document.getElementById('spiralType')
 var innerR = document.getElementById('InnerRadius');
 var outerR = document.getElementById('OuterRadius');
 var degrees = document.getElementById('Degrees');
 var rotations = document.getElementById('Rotations');
 var points = document.getElementById('Points');
 var lineWidth = document.getElementById('lineWidth');
-var degreeIncrementLabel = document.getElementById('DegreeIncrementLabel');
 var spiralGapLabel = document.getElementById('SpiralGapLabel');
+var degreeIncrementLabel = document.getElementById('DegreeIncrementLabel');
+var minLogRadiusWarnLabel = document.getElementById('minLogRadiusWarnLabel');
 
 var shouldMakeHelixCheckbox = document.getElementById('helixCheckbox');
 var helixOffsetX = document.getElementById('xOffset');
@@ -33,8 +42,25 @@ window.onload = function() {
   updateSpiral();
 };
 
+spiralType.addEventListener('change', function(evt) {
+  if (this.value == "Archimedean Spiral") {
+    currentSpiralType = SPIRAL_CONSTANTS.SPIRAL_TYPE_ARCHIMEDEAN;
+    console.log("Archimedean Spiral");
+  } else if (this.value == "Logarithmic Spiral") {
+    currentSpiralType = SPIRAL_CONSTANTS.SPIRAL_TYPE_LOGARITHIMIC;
+    console.log("Logarithmic Spiral");
+  }
+  setSpiralGapLabel();
+  setLogSpiralMinRadWarningLabel();
+  if(continouslyUpdateCheckbox.checked) {
+    updateSpiral();
+  }
+});
+
+
 innerR.addEventListener('input', function (evt) {
   setSpiralGapLabel();
+  setLogSpiralMinRadWarningLabel();
   if(continouslyUpdateCheckbox.checked) {
     updateSpiral();
   }
@@ -86,11 +112,11 @@ continouslyUpdateCheckbox.addEventListener('click', function (evt) {
     updateSpiralButton.disabled = true;
     updateSpiralButton.classList.add("disabled");
     debugLog("Button disabled");
+    updateSpiral();
   } else {
     updateSpiralButton.disabled = false;
     updateSpiralButton.classList.remove("disabled");
     debugLog("Button enabled");
-    updateSpiral();
   }
 });
 
@@ -147,18 +173,37 @@ function setDegreeIncrementLabel() {
 }
 
 function setSpiralGapLabel() {
-  var spiralGap = Math.abs(outerR.value - innerR.value) / rotations.value;
-  spiralGapLabel.innerHTML = "Gap of " + spiralGap.toFixed(2) + " after each rotation of the spiral";
+  if (currentSpiralType == SPIRAL_CONSTANTS.SPIRAL_TYPE_ARCHIMEDEAN) {
+    var spiralGap = Math.abs(outerR.value - innerR.value) / rotations.value;
+    spiralGapLabel.innerHTML = "Gap of " + spiralGap.toFixed(2) + " after each rotation of the spiral";
+  }
+  else if (currentSpiralType == SPIRAL_CONSTANTS.SPIRAL_TYPE_LOGARITHIMIC) {
+    var log_spiral_param_a = parseFloat(innerR.value);
+    var log_spiral_param_b = (Math.log(outerR.value/innerR.value))/(2*Math.PI*rotations.value);
+    spiralGapLabel.innerHTML = "Log spiral equation: a*e^(b*theta) -> a=" + log_spiral_param_a + "  theta=" + log_spiral_param_b.toFixed(4);
+  }
 }
 
-// Added 100ms timeout to each updated call.
-// Without it, plugin can make a new copy of the spiral on each call
-// if you're changing/incrementing some value really fast.
+function setLogSpiralMinRadWarningLabel() {
+  if(currentSpiralType == SPIRAL_CONSTANTS.SPIRAL_TYPE_LOGARITHIMIC) {
+    if(Math.round(innerR.value)<1.0) {
+      minLogRadiusWarnLabel.hidden = false;
+    } else {
+      minLogRadiusWarnLabel.hidden = true;
+    }
+  } else {
+    minLogRadiusWarnLabel.hidden = true;
+  }
+}
+
 function updateSpiral() {
   if(drawingSpiralInProcess == false) {
-    drawingSpiralInProcess = true;
+    // setting flag that plugin.js is working on a new spiral.
+    drawingSpiralInProcess = true; 
     document.getElementById('spiralDrawingStatusText').innerHTML = "Drawing Spiral";
+
     // sendSpiralDataToPlugin();
+    // Use timeout to examine changes between webView.js and plugin.js
     setTimeout(function(){ sendSpiralDataToPlugin(); }, 2);
   } else {
     stateHasChangedDuringDrawing = true;
@@ -169,6 +214,7 @@ function sendSpiralDataToPlugin() {
   // Create JSON object with the action we want to trigger and the current UNIX date
   var data = {
     "spiral": "Archimedean Spiral",
+    "currentSpiralType": currentSpiralType,
     "innerRadius": Math.round(innerR.value),
     "outerRadius": Math.round(outerR.value),
     "degrees": Math.round(degrees.value),
@@ -181,7 +227,6 @@ function sendSpiralDataToPlugin() {
     "date": new Date().getTime()
   }
   debugLog(data);
-  // setting flag that plugin.js is working on a new spiral.
   // Put the JSON as a string in the hash
   window.location.hash = JSON.stringify(data);
 }
