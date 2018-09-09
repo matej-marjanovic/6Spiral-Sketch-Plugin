@@ -8,7 +8,8 @@ var layer2;
 var spiralObjectID;
 var currentPage;
 var pageLayers;
-var debugMode = true;
+var debugMode = false;
+var panel;
 
 function onRun(context) {
   doc = context.document;
@@ -29,7 +30,7 @@ function onRun(context) {
   if (threadDictionary[identifier]) return;
 
   // Create the panel and set its appearance
-  var panel = NSPanel.alloc().init();
+  panel = NSPanel.alloc().init();
   panel.setFrame_display(NSMakeRect(0, 0, panelWidth, panelHeight), true);
   panel.setStyleMask(NSTexturedBackgroundWindowMask | NSTitledWindowMask | NSClosableWindowMask | NSFullSizeContentViewWindowMask);
   panel.setBackgroundColor(NSColor.whiteColor());
@@ -83,7 +84,13 @@ function onRun(context) {
       superDebug("DATA", data);
       superDebug("DATA", JSON.stringify(data));
 
-      if (data.hasOwnProperty('spiral')) {
+      if(data.hasOwnProperty('close')) {
+        panel.close();
+        // Remove the reference to the panel
+        threadDictionary.removeObjectForKey(identifier);
+        // Stop the plugin
+        COScript.currentCOScript().setShouldKeepAround_(false);
+      } else if (data.hasOwnProperty('spiral')) {
         // Make a SPIRAL.
         superDebug("PRESSED MAKE SPIRAL BUTTON", " ");
         superDebug("selectedLayers", selectedLayers);

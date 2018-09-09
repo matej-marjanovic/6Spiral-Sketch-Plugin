@@ -39,7 +39,7 @@
       <div role="tabpanel" class="active tab-pane" id="1">
 
           <div class="container my-form">
-            <h2>Set Parameters for Spiral</h2>
+            <h3>Set Parameters</h3>
               <form>
 
                 <div class="row">
@@ -68,12 +68,8 @@
                     <span id="SpiralGapLabel" class="label label-default">Gap of 100 after each rotation of the spiral.</span></h3>
                   </div>
                 </div>
-                <div class="form-group">
-                </div>
 
                 
-                <div class="form-group">
-
                     <div class="row">
                         <div class="form-group col-xs-6">
                           <div class="input-group">
@@ -90,59 +86,64 @@
                               <input type="number" class="form-control" id="lineWidth" name="lineWidth" value="5">
                             </div>
                         </div>
-                    </div> <!-- END of ROW -->
 
                 </div>
               </form>
-            
-            <div class="row">
-              <div class="form-group col-xs-6">
+
+
+              <div class="helix-settings">
+
                   <div class="well well-sm">
-                    <input type="checkbox" id="continouslyUpdateCheckbox" checked="true" aria-label="...">
-                    <span>Continously Update</span>
+                    <input type="checkbox" id="helixCheckbox" aria-label="...">
+                    <span> Make helix from Spiral</span>
+                  </div>
+  
+                  <div class="row">
+                      <div class="form-group col-xs-6">
+                        <div class="input-group">
+                          <span class="input-group-addon">Total Δx</span>
+                          <input type="number" class="form-control" id="xOffset" name="xOffset" value="0">
+                        </div>
+                      </div>
+                      <div class="form-group col-xs-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">Total Δy</span>
+                            <input type="number" class="form-control" id="yOffset" name="yOffset" value="100">
+                          </div>
+                      </div>
+                  </div> <!-- END of ROW -->
+  
+  
+              <div class="form-group" id="last-helix-setting">
+                  <label for="number">Set percevied angle (width/height ratio):</label>
+                <div class="input-group">
+                    <span class="input-group-addon">Isometric Angle</span>
+                    <input type="number" class="form-control" id="helixIsoAngle" name="helixIsoAngle" value="45">
+                  <span class="input-group-addon">H/W ratio</span>
+                  <input type="number" class="form-control" id="helixHWRatio" name="helixHWRatio" value="0.707" step="0.001">
+                </div>
+              </div>
+            
+            </div> <!-- END of Helix Settings -->
+
+            
+            <div class="row mainOptions">
+              <div class="form-group col-xs-12">
+                  <div class="well well-sm">
+                    <input type="checkbox" id="continouslyUpdateCheckbox" aria-label="...">
+                    <span>Continously Update (beta)</span>
                   </div>
               </div>
+            </div>
+
+            <div class="row">
               <div class="form-group col-xs-6">
-                <button id="spiral-button-1" class="btn btn-block btn-primary disabled">Update Spiral</button>
+                  <button id="updateSpiralButton" class="btn btn-block btn-primary">Update Spiral</button>
               </div>
-            </div>
-
-
-            <div class="helix-settings">
-
-                <div class="well well-sm">
-                  <input type="checkbox" id="helixCheckbox" aria-label="...">
-                  <span> Make helix from Spiral</span>
+              <div class="form-group col-xs-6">
+                  <button id="closePanel" class="btn btn-block btn-default">Done</button>
                 </div>
-
-                <div class="row">
-                    <div class="form-group col-xs-6">
-                      <div class="input-group">
-                        <span class="input-group-addon">Total Δx</span>
-                        <input type="number" class="form-control" id="xOffset" name="xOffset" value="0">
-                      </div>
-                    </div>
-                    <div class="form-group col-xs-6">
-                      <div class="input-group">
-                          <span class="input-group-addon">Total Δy</span>
-                          <input type="number" class="form-control" id="yOffset" name="yOffset" value="100">
-                        </div>
-                    </div>
-                </div> <!-- END of ROW -->
-
-
-            <div class="form-group" id="last-helix-setting">
-                <label for="number">Set percevied angle (width/height ratio):</label>
-              <div class="input-group">
-                  <span class="input-group-addon">Isometric Angle</span>
-                  <input type="number" class="form-control" id="helixIsoAngle" name="helixIsoAngle" value="45">
-                <span class="input-group-addon">H/W ratio</span>
-                <input type="number" class="form-control" id="helixHWRatio" name="helixHWRatio" value="0.707" step="0.001">
-              </div>
             </div>
-          
-          </div> <!-- END of Helix Settings -->
-
 
           </div>
       </div>

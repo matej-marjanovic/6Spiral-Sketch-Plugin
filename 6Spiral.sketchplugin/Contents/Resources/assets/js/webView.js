@@ -1,9 +1,9 @@
 
 // Commented out so that it's possible to Right Click -> Inspect Element.
 // Disable the context menu
-// document.addEventListener("contextmenu", function(e) {
-//   e.preventDefault();
-// });
+document.addEventListener("contextmenu", function(e) {
+  e.preventDefault();
+});
 
 var innerR = document.getElementById('InnerRadius');
 var outerR = document.getElementById('OuterRadius');
@@ -14,14 +14,15 @@ var lineWidth = document.getElementById('lineWidth');
 var degreeIncrementLabel = document.getElementById('DegreeIncrementLabel');
 var spiralGapLabel = document.getElementById('SpiralGapLabel');
 
-var continouslyUpdateCheckbox = document.getElementById('continouslyUpdateCheckbox');
-var updateSpiralButton = document.getElementById('spiral-button-1');
-
 var shouldMakeHelixCheckbox = document.getElementById('helixCheckbox');
 var helixOffsetX = document.getElementById('xOffset');
 var helixOffsetY = document.getElementById('yOffset');
 var helixHWRatio = document.getElementById('helixHWRatio');
 var helixIsoAngle = document.getElementById('helixIsoAngle');
+
+var continouslyUpdateCheckbox = document.getElementById('continouslyUpdateCheckbox');
+var updateSpiralButton = document.getElementById('updateSpiralButton');
+var closePanelButton = document.getElementById('closePanel');
 
 var debugLogFlag = true;
 
@@ -86,17 +87,6 @@ continouslyUpdateCheckbox.addEventListener('click', function (evt) {
     updateSpiralButton.disabled = false;
     updateSpiralButton.classList.remove("disabled");
     debugLog("Button enabled");
-  }
-});
-
-updateSpiralButton.addEventListener('click',function(){
-  debugLog('SPIRAL DEBUG // Spiral Button Clicked');
-  updateSpiral();
-  return false;
-});
-
-shouldMakeHelixCheckbox.addEventListener('click', function (evt) {
-  if(continouslyUpdateCheckbox.checked) {
     updateSpiral();
   }
 });
@@ -129,6 +119,24 @@ helixIsoAngle.addEventListener('input', function (evt) {
   }
 });
 
+updateSpiralButton.addEventListener('click',function(){
+  debugLog('SPIRAL DEBUG // Spiral Button Clicked');
+  updateSpiral();
+  return false;
+});
+
+shouldMakeHelixCheckbox.addEventListener('click', function (evt) {
+  if(continouslyUpdateCheckbox.checked) {
+    updateSpiral();
+  }
+});
+
+closePanelButton.addEventListener('click',function(){
+  debugLog('SPIRAL DEBUG // Close Panel Button Clicked');
+  closePanel();
+  return false;
+});
+
 
 function setDegreeIncrementLabel() {
   var degreeIncrement = degrees.value/(Math.floor(points.value));
@@ -144,7 +152,7 @@ function setSpiralGapLabel() {
 // Without it, plugin can make a new copy of the spiral on each call
 // if you're changing/incrementing some value really fast.
 function updateSpiral() {
-  setTimeout(function(){ sendSpiralDataToPlugin(); }, 100);
+  setTimeout(function(){ sendSpiralDataToPlugin(); }, 200);
 }
 
 function sendSpiralDataToPlugin() {
@@ -160,6 +168,18 @@ function sendSpiralDataToPlugin() {
     "helixOffsetX": helixOffsetX.value,
     "helixOffsetY": helixOffsetY.value,
     "helixHWRatio": helixHWRatio.value,
+    "date": new Date().getTime()
+  }
+  debugLog(data);
+  // Put the JSON as a string in the hash
+  window.location.hash = JSON.stringify(data);
+}
+
+function closePanel() {
+  // Create JSON object with the action we want to trigger and the current UNIX date
+  var data = {
+    "spiral": "Archimedean Spiral",
+    "close": true,
     "date": new Date().getTime()
   }
   debugLog(data);

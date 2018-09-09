@@ -23,9 +23,9 @@ html {
   margin-top: 3pt;
 }
 
-#bootstrap-overrides h2 {
-  margin-top: 15pt;
-  margin-bottom: 12pt;
+#bootstrap-overrides h3 {
+  margin-top: 10pt;
+  margin-bottom: 8pt;
 }
 
 #bootstrap-overrides .helix-settings {
@@ -34,7 +34,16 @@ html {
   border-radius: 5px;
   padding-bottom: 0px;
   margin-bottom: 10px;
-  border-color: #888888;
+  border-color: #aaaaaa;
+}
+
+#bootstrap-overrides .well-sm {
+  margin-bottom: 0;
+  padding: 4.5pt;
+}
+
+#bootstrap-overrides .mainOptions {
+  margin-top: 18pt;
 }
 
 #bootstrap-overrides .helix-settings #last-helix-setting{
