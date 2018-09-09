@@ -25,6 +25,8 @@ function onRun(context) {
   currentPage = doc.currentPage();
   pageLayers = currentPage.layers();
 
+  sendEvent(context, 'Plugin Started', 'onRun function');
+
   var panelWidth = 400; // original 80
   var panelHeight = 700; // original 240
 
@@ -244,19 +246,15 @@ function addSpiral(layer, data) {
     // For Log Spiral, inner radius can't 0 (log spiral only approaches, never reaches 0). 
     var a_log = innerR;
     var b_log = (Math.log(outerR/innerR))/(2*Math.PI*(degrees/360.0));
-    log("SPIRAL b_log: " + b_log);
     var degrees_per_point_log = degrees/points;
     var radians_per_point_log = degrees_per_point_log * (Math.PI/180);
 
     for (var i = 0; i <= points; i++) {
       var pointAngleDeg = i * degrees_per_point_log;
       var pointAngleRad = i * radians_per_point_log;
-      log('SPIRAL pointAngle ' + pointAngle);
       var pointLength =  a_log * Math.pow(Math.E, b_log*pointAngleRad);
       var pointX = pointLength * Math.cos(pointAngleDeg * (Math.PI / 180));
       var pointY = pointLength * Math.sin(pointAngleDeg * (Math.PI / 180));
-      log('SPIRAL Point X: ' + pointX + ' Point Y: ' + pointY);
-      log('SPIRAL pointLength ' + pointLength);
 
       if(shouldMakeHelix) {
         pointY = pointY * helixHWRatio;
@@ -356,4 +354,51 @@ function superDebug(lbl, val) {
   if(debugMode) {
     log("SKETCH 6SPIRAL - " + lbl + ": " + val);  
   }
+}
+
+var kUUIDKey = 'google.analytics.uuid'
+var uuid = NSUserDefaults.standardUserDefaults().objectForKey(kUUIDKey)
+if (!uuid) {
+  uuid = NSUUID.UUID().UUIDString()
+  NSUserDefaults.standardUserDefaults().setObject_forKey(uuid, kUUIDKey)
+}
+
+function jsonToQueryString(json) {
+  return '?' + Object.keys(json).map(function(key) {
+    return encodeURIComponent(key) + '=' + encodeURIComponent(json[key]);
+  }).join('&')
+}
+
+var index = function (context, trackingId, hitType, props) {
+  var payload = {
+    v: 1,
+    tid: trackingId,
+    ds: 'Sketch%20' + NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString"),
+    cid: uuid,
+    t: hitType,
+    an: context.plugin.name(),
+    aid: context.plugin.identifier(),
+    av: context.plugin.version()
+  }
+  if (props) {
+    Object.keys(props).forEach(function (key) {
+      payload[key] = props[key]
+    })
+  }
+
+  var url = NSURL.URLWithString(
+    NSString.stringWithFormat("https://www.google-analytics.com/collect%@", jsonToQueryString(payload))
+  )
+
+  if (url) {
+    NSURLSession.sharedSession().dataTaskWithURL(url).resume()
+  }
+}
+
+var key = 'UA-124831510-1';
+var sendEvent = function (context, category, action, label) {
+  var payload = {};
+  payload.ec = category;
+  payload.ea = action;
+  return index(context, key, 'event', payload);
 }
