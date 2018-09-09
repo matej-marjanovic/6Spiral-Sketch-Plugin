@@ -11,6 +11,8 @@ var pageLayers;
 var debugMode = false;
 var panel;
 
+var drawingSpiralInProcess = false;
+
 function onRun(context) {
   doc = context.document;
   selectedLayers = context.selection;
@@ -124,6 +126,7 @@ function onRun(context) {
     
         }
       }
+      windowObject.evaluateWebScript("drawingSpiralCompleted()");
     })
   })
 

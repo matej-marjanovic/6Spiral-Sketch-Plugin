@@ -1,9 +1,9 @@
 
 // Commented out so that it's possible to Right Click -> Inspect Element.
 // Disable the context menu
-document.addEventListener("contextmenu", function(e) {
-  e.preventDefault();
-});
+// document.addEventListener("contextmenu", function(e) {
+//   e.preventDefault();
+// });
 
 var innerR = document.getElementById('InnerRadius');
 var outerR = document.getElementById('OuterRadius');
@@ -23,6 +23,9 @@ var helixIsoAngle = document.getElementById('helixIsoAngle');
 var continouslyUpdateCheckbox = document.getElementById('continouslyUpdateCheckbox');
 var updateSpiralButton = document.getElementById('updateSpiralButton');
 var closePanelButton = document.getElementById('closePanel');
+
+var drawingSpiralInProcess = false;
+var stateHasChangedDuringDrawing = false;
 
 var debugLogFlag = true;
 
@@ -152,7 +155,14 @@ function setSpiralGapLabel() {
 // Without it, plugin can make a new copy of the spiral on each call
 // if you're changing/incrementing some value really fast.
 function updateSpiral() {
-  setTimeout(function(){ sendSpiralDataToPlugin(); }, 200);
+  if(drawingSpiralInProcess == false) {
+    drawingSpiralInProcess = true;
+    document.getElementById('spiralDrawingStatusText').innerHTML = "Drawing Spiral";
+    // sendSpiralDataToPlugin();
+    setTimeout(function(){ sendSpiralDataToPlugin(); }, 2);
+  } else {
+    stateHasChangedDuringDrawing = true;
+  }
 }
 
 function sendSpiralDataToPlugin() {
@@ -171,9 +181,20 @@ function sendSpiralDataToPlugin() {
     "date": new Date().getTime()
   }
   debugLog(data);
+  // setting flag that plugin.js is working on a new spiral.
   // Put the JSON as a string in the hash
   window.location.hash = JSON.stringify(data);
 }
+
+// function to call from inside plugin.js when spiral is finished.
+function drawingSpiralCompleted() {
+  document.getElementById('spiralDrawingStatusText').innerHTML = "Drawing Completed";
+  drawingSpiralInProcess = false;
+  if(stateHasChangedDuringDrawing) {
+    stateHasChangedDuringDrawing = false;
+    updateSpiral();
+  }
+} 
 
 function closePanel() {
   // Create JSON object with the action we want to trigger and the current UNIX date
