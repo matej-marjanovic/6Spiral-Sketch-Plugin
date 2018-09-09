@@ -66,6 +66,7 @@ innerR.addEventListener('input', function (evt) {
 
 outerR.addEventListener('input', function (evt) {
   setSpiralGapLabel();
+  setLogSpiralMinRadWarningLabel();
   if(continouslyUpdateCheckbox.checked) {
     updateSpiral();
   }
@@ -93,6 +94,9 @@ degrees.addEventListener('input', function (evt) {
 
 points.addEventListener('input', function (evt) {
   debugLog(this.value);
+  if(this.value<2) {
+    this.value = 2;
+  }
   setDegreeIncrementLabel();
   if(continouslyUpdateCheckbox.checked) {
     updateSpiral();
@@ -184,7 +188,7 @@ function setSpiralGapLabel() {
 
 function setLogSpiralMinRadWarningLabel() {
   if(currentSpiralType == SPIRAL_CONSTANTS.SPIRAL_TYPE_LOGARITHIMIC) {
-    if(Math.round(innerR.value)<1.0) {
+    if(Math.round(innerR.value)<1.0 || Math.round(outerR.value)<1.0) {
       minLogRadiusWarnLabel.hidden = false;
     } else {
       minLogRadiusWarnLabel.hidden = true;

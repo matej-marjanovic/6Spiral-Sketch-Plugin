@@ -180,8 +180,11 @@ function addSpiral(layer, data) {
     innerR = Math.max(innerR, 1.0);
   }
   var outerR = parseInt(data.outerRadius);
+  if (currentSpiralType == SPIRAL_CONSTANTS.SPIRAL_TYPE_LOGARITHIMIC) {
+    outerR = Math.max(outerR, 1.0);
+  }
   var degrees = parseInt(data.degrees);
-  var points = parseInt(data.points);
+  var points = Math.max(parseInt(data.points), 2);
   var lineWidth = parseFloat(data.lineWidth);
 
   var shouldMakeHelix = data.shouldMakeHelix;
