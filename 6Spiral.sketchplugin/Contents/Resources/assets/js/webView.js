@@ -223,7 +223,7 @@ function updateSpiral() {
 
     // sendSpiralDataToPlugin();
     // Use timeout to examine changes between webView.js and plugin.js
-    setTimeout(function(){ sendSpiralDataToPlugin(); }, 2);
+    setTimeout(function(){ sendSpiralDataToPlugin(); }, 4);
   } else {
     stateHasChangedDuringDrawing = true;
   }
