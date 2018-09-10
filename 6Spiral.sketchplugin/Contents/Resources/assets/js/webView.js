@@ -1,9 +1,9 @@
 
 // Commented out so that it's possible to Right Click -> Inspect Element.
 // Disable the context menu
-document.addEventListener("contextmenu", function(e) {
-  e.preventDefault();
-});
+// document.addEventListener("contextmenu", function(e) {
+//   e.preventDefault();
+// });
 
 const SPIRAL_CONSTANTS = {
   SPIRAL_TYPE_ARCHIMEDEAN: 0,
@@ -35,6 +35,9 @@ var closePanelButton = document.getElementById('closePanel');
 
 var drawingSpiralInProcess = false;
 var stateHasChangedDuringDrawing = false;
+
+var minPointsText = "";
+var minDegreesText = "";
 
 var debugLogFlag = true;
 
@@ -75,6 +78,12 @@ outerR.addEventListener('input', function (evt) {
 rotations.addEventListener('input', function (evt) {
   debugLog(this.value);
   degrees.value = this.value*360;
+  if(degrees.value < 1.0) {
+    minDegreesText = "(min rotation is 1°)";
+  } else {
+    minDegreesText = "";
+  }
+
   setDegreeIncrementLabel();
   setSpiralGapLabel();
   if(continouslyUpdateCheckbox.checked) {
@@ -85,6 +94,11 @@ rotations.addEventListener('input', function (evt) {
 degrees.addEventListener('input', function (evt) {
   debugLog(this.value);
   rotations.value = this.value/360;
+  if(degrees.value < 1.0) {
+    minDegreesText = " - USING ROTATION of 1°";
+  } else {
+    minDegreesText = "";
+  }
   setDegreeIncrementLabel();
   setSpiralGapLabel();
   if(continouslyUpdateCheckbox.checked) {
@@ -95,8 +109,11 @@ degrees.addEventListener('input', function (evt) {
 points.addEventListener('input', function (evt) {
   debugLog(this.value);
   if(this.value<2) {
-    this.value = 2;
+    minPointsText = " - USING 2 POINTS";
+  } else {
+    minPointsText = "";
   }
+
   setDegreeIncrementLabel();
   if(continouslyUpdateCheckbox.checked) {
     updateSpiral();
@@ -171,7 +188,7 @@ closePanelButton.addEventListener('click',function(){
 
 function setDegreeIncrementLabel() {
   var degreeIncrement = degrees.value/(Math.floor(points.value));
-  degreeIncrementLabel.innerHTML = "Point every " + degreeIncrement.toFixed(2) + " degrees";
+  degreeIncrementLabel.innerHTML = "Point every " + degreeIncrement.toFixed(2) + " degrees" + minPointsText + minDegreesText;;
 }
 
 function setSpiralGapLabel() {

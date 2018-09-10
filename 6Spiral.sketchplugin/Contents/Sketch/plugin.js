@@ -183,7 +183,7 @@ function addSpiral(layer, data) {
   if (currentSpiralType == SPIRAL_CONSTANTS.SPIRAL_TYPE_LOGARITHIMIC) {
     outerR = Math.max(outerR, 1.0);
   }
-  var degrees = parseInt(data.degrees);
+  var degrees = Math.max(parseInt(data.degrees),1);
   var points = Math.max(parseInt(data.points), 2);
   var lineWidth = parseFloat(data.lineWidth);
 
@@ -197,9 +197,6 @@ function addSpiral(layer, data) {
   var helixPointOffsetX = helixOffsetX/points;
   var helixPointOffsetY = helixOffsetY/points;
 
-
-  // final outer R is 93.2 now (50 + 54 * 0.8)
-  // (93.2 - 50) / 54
   var pointDistanceIncrement = (outerR - innerR)/(points);
 
   superDebug("Making Spiral", " ");
@@ -207,7 +204,6 @@ function addSpiral(layer, data) {
   superDebug("outerRadius", data.outerRadius);
   superDebug("shouldMakeHelix", shouldMakeHelix); 
   superDebug("helixPointOffsetY", helixPointOffsetY); 
-
 
   var spiralPath = NSBezierPath.bezierPath();
   spiralPath.moveToPoint(NSMakePoint(0, 0));
