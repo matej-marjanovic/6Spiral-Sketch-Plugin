@@ -16,7 +16,10 @@ var pageLayers;
 var debugMode = false;
 var panel;
 
+var data;
+
 var drawingSpiralInProcess = false;
+var pluginChangedSelection = false;
 
 function onRun(context) {
   doc = context.document;
@@ -51,6 +54,7 @@ function onRun(context) {
   // Center and focus the panel
   panel.center();
   panel.makeKeyAndOrderFront(null);
+  panel.becomeKeyWindow();
   panel.setLevel(NSFloatingWindowLevel);
 
   // Make the plugin's code stick around (since it's a floating panel)
@@ -89,7 +93,7 @@ function onRun(context) {
       var hash = windowObject.evaluateWebScript("window.location.hash.substring(1)");
 
       // Parse the hash's JSON content
-      var data = JSON.parse(hash);
+      data = JSON.parse(hash);
       superDebug("DATA", data);
       superDebug("DATA", JSON.stringify(data));
 
@@ -305,6 +309,7 @@ function addSpiral(layer, data) {
   gr.addLayers([spiralShape]);
   // spiralShape.select_byExtendingSelection(true, true);
   spiralShape.select_byExtendingSelection(true, true);
+  pluginChangedSelection = true;
 
   superDebug("Completed Making Spiral", "");
 }
@@ -334,10 +339,25 @@ var onSelectionChanged = function(context) {
       if (layer && layer.isKindOfClass(MSShapeGroup)) {
 
         superDebug("onSelectionChanged MSShapeGroup found", " ");
+
+        // Calling AddSpiral - infinite loop, as addSpiral() changes the selection, which is this function.
+        // --> Specifically calling >> spiralShape.select_byExtendingSelection(true, true); may triger this function.
+        // Need to use flags to destinguish when onSelectionChanged is due to user or due to the plugin - addSpiral(). - DONE - pluginChangedSelection)
+        // Also, need to make flag for case when would want run addSpiral once specifically because user changed the selction.
+        // ^ If would want to center spiral immediatelly on change of user selection.
+        // addSpiral(layer, data);
+        // context.actionContext.document.showMessage('Spiral will be centered on selected shape with next change.');
+
+        if (pluginChangedSelection) {
+            //context.actionContext.document.showMessage('Selection Changed By Plugin.');
+            pluginChangedSelection = false;
+        } else {
+            context.actionContext.document.showMessage('Spiral will be centered on selected shape with next change.');
+        }
   
       } else {
         superDebug("NOT FOUND onSelectionChanged MSShapeGroup", " ");
-        context.actionContext.document.showMessage('Need to select shape for 🌀6Spiral.');
+        context.actionContext.document.showMessage('Oops. To run 🌀6Spiral you need to select a shape.');
       }
     }
     if(selectedCount == 2) {
