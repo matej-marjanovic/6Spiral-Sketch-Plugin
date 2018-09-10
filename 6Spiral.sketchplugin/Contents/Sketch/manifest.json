@@ -1,10 +1,11 @@
 {
   "name" : "🌀6Spiral",
   "identifier" : "design.matej.6spiral",
-  "version" : "1.1",
+  "version" : "1.0",
   "icon": "icon.png",
   "description" : "Plugin to make spirals in Sketch.",
   "author" : "Matej Marjanovic",
+  "authorEmail": "matej.marjanovich@gmail.com",
   "commands" : [
     {
       "script" : "plugin.js",
