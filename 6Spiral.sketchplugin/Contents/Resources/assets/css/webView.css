@@ -19,7 +19,7 @@ html {
   user-select: none;
 }
 
-#bootstrap-overrides form {
+#bootstrap-overrides #SpiralPluginPanel {
   margin-top: 10pt;
 }
 
