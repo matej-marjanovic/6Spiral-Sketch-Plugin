@@ -138,7 +138,8 @@ function onRun(context) {
         }
       }
       // Send info back to webView.js that Spiral has been made.
-      windowObject.evaluateWebScript("drawingSpiralCompleted()");
+      // Moved to where we detect if selection is changed by the plugin.
+      // windowObject.evaluateWebScript("drawingSpiralCompleted()");
     })
   })
 
@@ -187,6 +188,14 @@ function addSpiral(layer, data) {
   if (currentSpiralType == SPIRAL_CONSTANTS.SPIRAL_TYPE_LOGARITHIMIC) {
     outerR = Math.max(outerR, 1.0);
   }
+  
+  // Inner and Outer Radius also can't both be 0 for archimedean spiral.
+  // Setting both to 0 erases the shape and plugin needs to be restarted.
+  // Forcing outerR to 1.0 if both InnerR and outerR are set to 0 to prevent this issue.
+  if(innerR == 0 && outerR == 0) {
+      outerR = 1.0;
+  }
+
   var degrees = Math.max(parseInt(data.degrees),1);
   var points = Math.max(parseInt(data.points), 2);
   var lineWidth = parseFloat(data.lineWidth);
@@ -308,8 +317,8 @@ function addSpiral(layer, data) {
 
   gr.addLayers([spiralShape]);
   // spiralShape.select_byExtendingSelection(true, true);
-  spiralShape.select_byExtendingSelection(true, true);
   pluginChangedSelection = true;
+  spiralShape.select_byExtendingSelection(true, true);
 
   superDebug("Completed Making Spiral", "");
 }
@@ -342,8 +351,8 @@ var onSelectionChanged = function(context) {
 
         // Calling AddSpiral - infinite loop, as addSpiral() changes the selection, which is this function.
         // --> Specifically calling >> spiralShape.select_byExtendingSelection(true, true); may triger this function.
-        // Need to use flags to destinguish when onSelectionChanged is due to user or due to the plugin - addSpiral(). - DONE - pluginChangedSelection)
-        // Also, need to make flag for case when would want run addSpiral once specifically because user changed the selction.
+        // Need to use flags to destinguish when onSelectionChanged is due to user or due to the plugin - addSpiral(). - DONE - added pluginChangedSelection
+        // Also, need to make flag for case when would want run addSpiral once automatically to center spiral because user changed the selction.
         // ^ If would want to center spiral immediatelly on change of user selection.
         // addSpiral(layer, data);
         // context.actionContext.document.showMessage('Spiral will be centered on selected shape with next change.');
@@ -351,8 +360,10 @@ var onSelectionChanged = function(context) {
         if (pluginChangedSelection) {
             //context.actionContext.document.showMessage('Selection Changed By Plugin.');
             pluginChangedSelection = false;
+            // Sending back info to webView.js that plugin has finished drawing.
+            windowObject.evaluateWebScript("drawingSpiralCompleted()");
         } else {
-            context.actionContext.document.showMessage('Spiral will be centered on selected shape with next change.');
+            context.actionContext.document.showMessage('Spiral origin will be centered on selected shape with next change.');
         }
   
       } else {

@@ -22,6 +22,7 @@ var lineWidth = document.getElementById('lineWidth');
 var spiralGapLabel = document.getElementById('SpiralGapLabel');
 var degreeIncrementLabel = document.getElementById('DegreeIncrementLabel');
 var minLogRadiusWarnLabel = document.getElementById('minLogRadiusWarnLabel');
+var minArchimedeanRadiusWarnLabel = document.getElementById('minArchimedeanRadiusWarnLabel');
 
 var shouldMakeHelixCheckbox = document.getElementById('helixCheckbox');
 var helixOffsetX = document.getElementById('xOffset');
@@ -52,7 +53,7 @@ spiralType.addEventListener('change', function(evt) {
     currentSpiralType = SPIRAL_CONSTANTS.SPIRAL_TYPE_LOGARITHIMIC;
   }
   setSpiralGapLabel();
-  setLogSpiralMinRadWarningLabel();
+  setSpiralMinRadiusWarningLabels();
   if(continouslyUpdateCheckbox.checked) {
     updateSpiral();
   }
@@ -61,7 +62,7 @@ spiralType.addEventListener('change', function(evt) {
 
 innerR.addEventListener('input', function (evt) {
   setSpiralGapLabel();
-  setLogSpiralMinRadWarningLabel();
+  setSpiralMinRadiusWarningLabels();
   if(continouslyUpdateCheckbox.checked) {
     updateSpiral();
   }
@@ -69,7 +70,7 @@ innerR.addEventListener('input', function (evt) {
 
 outerR.addEventListener('input', function (evt) {
   setSpiralGapLabel();
-  setLogSpiralMinRadWarningLabel();
+  setSpiralMinRadiusWarningLabels();
   if(continouslyUpdateCheckbox.checked) {
     updateSpiral();
   }
@@ -203,7 +204,7 @@ function setSpiralGapLabel() {
   }
 }
 
-function setLogSpiralMinRadWarningLabel() {
+function setSpiralMinRadiusWarningLabels() {
   if(currentSpiralType == SPIRAL_CONSTANTS.SPIRAL_TYPE_LOGARITHIMIC) {
     if(Math.round(innerR.value)<1.0 || Math.round(outerR.value)<1.0) {
       minLogRadiusWarnLabel.hidden = false;
@@ -212,6 +213,13 @@ function setLogSpiralMinRadWarningLabel() {
     }
   } else {
     minLogRadiusWarnLabel.hidden = true;
+
+    if (innerR.value == 0.0 && outerR.value == 0.0) {
+      minArchimedeanRadiusWarnLabel.hidden = false;
+    } else {
+      minArchimedeanRadiusWarnLabel.hidden = true;
+    }
+
   }
 }
 
@@ -223,7 +231,9 @@ function updateSpiral() {
 
     // sendSpiralDataToPlugin();
     // Use timeout to examine changes between webView.js and plugin.js
+    // Timeout also helpful for bug where on every change a new copy of spiral is made.
     setTimeout(function(){ sendSpiralDataToPlugin(); }, 4);
+
   } else {
     stateHasChangedDuringDrawing = true;
   }
@@ -256,7 +266,9 @@ function drawingSpiralCompleted() {
   drawingSpiralInProcess = false;
   if(stateHasChangedDuringDrawing) {
     stateHasChangedDuringDrawing = false;
-    updateSpiral();
+    document.getElementById('spiralDrawingStatusText').innerHTML = "Drawing Spiral";
+    // Adding this additional timout appears to help with the bug where on every change a new copy of spiral is made.
+    setTimeout(function(){ updateSpiral(); }, 4);
   }
 } 
 
