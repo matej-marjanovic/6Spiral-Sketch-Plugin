@@ -1,9 +1,9 @@
 
 // Commented out so that it's possible to Right Click -> Inspect Element.
 // Disable the context menu
-document.addEventListener("contextmenu", function(e) {
-  e.preventDefault();
-});
+// document.addEventListener("contextmenu", function(e) {
+//   e.preventDefault();
+// });
 
 const SPIRAL_CONSTANTS = {
   SPIRAL_TYPE_ARCHIMEDEAN: 0,
@@ -33,6 +33,26 @@ var helixIsoAngle = document.getElementById('helixIsoAngle');
 var continouslyUpdateCheckbox = document.getElementById('continouslyUpdateCheckbox');
 var updateSpiralButton = document.getElementById('updateSpiralButton');
 var closePanelButton = document.getElementById('closePanel');
+
+document.getElementById('6SpiralTutorialLink').addEventListener('click',function(){
+  debugLog('SPIRAL DEBUG // TUTORIAL LINK CLICKED');
+  openLink("https://rebrand.ly/6SpiralTutorial");
+});
+
+document.getElementById('6SpiralFeedbackLink').addEventListener('click',function(){
+  debugLog('SPIRAL DEBUG // FEEDBACK LINK CLICKED');
+  openLink("https://rebrand.ly/6SpiralFeedback");
+
+});
+
+function openLink(link) {
+  // Create JSON object with the action we want to trigger and the current UNIX date.
+  var data = {
+    "link": link,
+    "date": new Date().getTime()
+  }
+  window.location.hash = JSON.stringify(data);
+}
 
 var drawingSpiralInProcess = false;
 var stateHasChangedDuringDrawing = false;

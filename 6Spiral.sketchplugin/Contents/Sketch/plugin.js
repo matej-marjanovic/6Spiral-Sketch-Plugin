@@ -97,13 +97,17 @@ function onRun(context) {
       superDebug("DATA", data);
       superDebug("DATA", JSON.stringify(data));
 
-      if(data.hasOwnProperty('close')) {
+      if (data.hasOwnProperty('link')) {
+        openURL(data.link);
+      }
+      else if (data.hasOwnProperty('close')) {
         panel.close();
         // Remove the reference to the panel
         threadDictionary.removeObjectForKey(identifier);
         // Stop the plugin
         COScript.currentCOScript().setShouldKeepAround_(false);
-      } else if (data.hasOwnProperty('spiral')) {
+      }
+      else if (data.hasOwnProperty('spiral')) {
         // Make a SPIRAL.
         superDebug("PRESSED MAKE SPIRAL BUTTON", " ");
         superDebug("selectedLayers", selectedLayers);
@@ -138,7 +142,7 @@ function onRun(context) {
         }
       }
       // Send info back to webView.js that Spiral has been made.
-      // Moved to where we detect if selection is changed by the plugin.
+      // Moved this function to where we detect if selection was changed by the plugin.
       // windowObject.evaluateWebScript("drawingSpiralCompleted()");
     })
   })
@@ -323,7 +327,8 @@ function addSpiral(layer, data) {
   superDebug("Completed Making Spiral", "");
 }
 
-
+// FUNCTION THAT RUNS EACH TIME SELECTION IS CHANGED WHILE PLUGIN IS RUNNING.
+// FUNCTION RUNS BOTH WHEN PLUGIN CHANGES SELECTION AND WHEN USER CHANGES IT.
 var onSelectionChanged = function(context) {
   var threadDictionary = NSThread.mainThread().threadDictionary();
   var identifier = "design.matej.6spiral";
@@ -378,6 +383,14 @@ var onSelectionChanged = function(context) {
   }
 };
 
+// OPENING LINKS FROM WEBVIEW
+function openURL(url){
+  var nsurl = NSURL.URLWithString(url);
+  NSWorkspace.sharedWorkspace().openURL(nsurl)
+}
+
+
+// ANALYTICS
 var kUUIDKey = 'google.analytics.uuid'
 var uuid = NSUserDefaults.standardUserDefaults().objectForKey(kUUIDKey)
 if (!uuid) {
