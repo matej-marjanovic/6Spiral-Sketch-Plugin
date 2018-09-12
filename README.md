@@ -25,6 +25,8 @@ Plugin will create a spiral with the origin origin at the center of the selected
 
 *For plugin to work make sure only one simple shape you made is selected when you run it. **Plugin won't work if you select a group, artboard, text layer or any shape layer that you didn't make yourself (like outlined text).*** 
 
+[There is also a sketch file with a tutorial and some examples that you can download here.](https://github.com/matej-marjanovic/6Spiral-Tutorial-Example-Sketch-File/raw/master/6Spiral%20Examples%20and%20Tutorial.sketch)
+
 ## Making a Spiral
 ![6spiral_making_spirals](https://user-images.githubusercontent.com/2822227/45357080-13586d80-b57a-11e8-851c-8366dbbc45b5.gif)
 
@@ -42,18 +44,19 @@ A nice way to make a completely smooth spiral is to set a large corner radius on
 
 # Few Examples Shapes
 
-## Logarithmic Spiral Example
+## Logarithmic Spirals Example
 ![log_spiral_examples_wide](https://user-images.githubusercontent.com/2822227/45360143-89150700-b583-11e8-9fda-bfed87f18dfb.png)
 
 ## Spiral Helix Example at 60º degrees
 ![helix_spiral_examples](https://user-images.githubusercontent.com/2822227/45360142-89150700-b583-11e8-912b-6972eb293bd7.png)
 
 
-## Helix Example with 4 points per one revolution.
+## Helix Example with 4 points per one revolution
 ![helix_low_point](https://user-images.githubusercontent.com/2822227/45360141-89150700-b583-11e8-93eb-fb01493b578d.png)
 
 ## 🌀6Spiral + Looper Example
 ![6spiral_and_looper](https://user-images.githubusercontent.com/2822227/45360140-89150700-b583-11e8-86fd-408fae35aa6c.png)
+
 [Looper is a great plugin](http://sureskumar.com/looper/) you can use in combination with 6Spiral to make interesting effects. Before using Looper you'll probably want to group the spiral with a shape centered on the origin of the spiral that has bounds that are larger than that of the spiral so that the center of the group is centered on the origin of the spiral.
 
 # Reporting Issues, Feedback, More Info, ... 
@@ -61,7 +64,7 @@ A nice way to make a completely smooth spiral is to set a large corner radius on
 
 [This medium article has some of the same info but also includes more ideas and suggestions on where to use this plugin.](https://medium.com/@matejmarjanovic/4a921c13f5ef)
 
-Thanks to [Sures](https://github.com/sureskumar/) for testing an early version of this plugin.
+Thanks to [Sures](https://github.com/sureskumar/) for feedback on the beta version of this plugin.
 
 ## Known Issues
 
@@ -70,7 +73,7 @@ Thanks to [Sures](https://github.com/sureskumar/) for testing an early version o
 
 Issues can also be mitigated/lessened by disabling the "Continously Update" option and pressing the "Update Spiral" each time you want to update the spiral to the changed parameters.
 
-## Some resources I found useful for developing this Sketch Plugin
+## A few resources that I found useful for developing this Sketch Plugin
 - https://developer.sketchapp.com/guides/
 - https://awkward.co/blog/how-to-create-floating-sketch-plugins-i/
 - https://github.com/turbobabr/Sketch-Plugins-Cookbook
