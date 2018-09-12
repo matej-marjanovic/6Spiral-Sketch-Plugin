@@ -3,7 +3,7 @@
 
 ![6spiral_logo_image](https://user-images.githubusercontent.com/2822227/45348015-53135b00-b562-11e8-8f37-d5a44997418c.png) 
 
-# 🌀6Spiral Sketch Plugin v1.0
+# 🌀6Spiral Sketch Plugin v1.0.1
 
 6Spiral is a sketch plugin to draw spirals and it also allows you to convert the 2D spirals into 3D-like helix shapes at a specified isometric angle.
 
@@ -49,7 +49,7 @@ A nice way to make a completely smooth spiral is to set a large corner radius on
 ![helix_spiral_examples](https://user-images.githubusercontent.com/2822227/45360142-89150700-b583-11e8-912b-6972eb293bd7.png)
 
 
-## Low point count Helix Example
+## Helix Example with 4 points per one revolution.
 ![helix_low_point](https://user-images.githubusercontent.com/2822227/45360141-89150700-b583-11e8-93eb-fb01493b578d.png)
 
 ## 🌀6Spiral + Looper Example
@@ -59,16 +59,16 @@ A nice way to make a completely smooth spiral is to set a large corner radius on
 # Reporting Issues, Feedback, More Info, ... 
 👋Hi. Feel free to contact me at matej.marjanovich@gmail.com or [open an issue here on Github](https://github.com/matej-marjanovic/6Spiral-Sketch-Plugin/issues).
 
-More info/ideas on where to use this plugin is written in this Medium article:
+[This medium article has some of the same info but also includes more ideas and suggestions on where to use this plugin.](https://medium.com/@matejmarjanovic/4a921c13f5ef)
 
 Thanks to [Sures](https://github.com/sureskumar/) for testing an early version of this plugin.
 
 ## Known Issues
 
-- Setting some of the parameters to just the minus sign can make the spiral dissapear. Simply close and reopen the plugin (you will have to change the parameters again from the defaults).
+- Setting some of the parameters to just the minus sign will make the spiral dissapear. Simply close and reopen the plugin (you will have to change the parameters again from the defaults). If you're setting a negative value, make sure that you're adding a minus in front of a number, not just on its own.
 - Having too much fun with 6Spiral can cause Sketch to crash sometimes 😅.
 
-Issues can be mitigated/lessened by disabling the "Continously Update" option and pressing the "Update Spiral" each time you want to update the spiral to the changed parameters.
+Issues can also be mitigated/lessened by disabling the "Continously Update" option and pressing the "Update Spiral" each time you want to update the spiral to the changed parameters.
 
 ## Some resources I found useful for developing this Sketch Plugin
 - https://developer.sketchapp.com/guides/
