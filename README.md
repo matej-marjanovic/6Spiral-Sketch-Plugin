@@ -47,7 +47,7 @@ A nice way to make a completely smooth spiral is to set a large corner radius on
 ## Logarithmic Spirals Example
 ![log_spiral_examples_wide](https://user-images.githubusercontent.com/2822227/45360143-89150700-b583-11e8-9fda-bfed87f18dfb.png)
 
-## Spiral Helix Example at 60º degrees
+## Spiral Helix Examples at 60° isometric angle
 ![helix_spiral_examples](https://user-images.githubusercontent.com/2822227/45360142-89150700-b583-11e8-912b-6972eb293bd7.png)
 
 
