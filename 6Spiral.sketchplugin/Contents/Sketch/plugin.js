@@ -136,7 +136,7 @@ function onRun(context) {
         
             } else {
               superDebug("DIDNT MAKE SPIRAL", " ");
-              doc.showMessage('Oops, not a path.😅 ');
+              doc.showMessage("Oops, 🌀6Spiral can't work with current selection.😅 ");
             }
     
         }
