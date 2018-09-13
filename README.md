@@ -12,8 +12,9 @@
 # Getting Started
 
 1. Download the [latest release](https://github.com/matej-marjanovic/6Spiral-Sketch-Plugin/releases).
-2.  Unzip and double click on `6Spiral.sketchplugin` to install the    plugin.
-3. Make and select a shape and then go to `Plugins -> 🌀6Spiral - Make    Spiral` or use the shortcut `Control + Shift + 6`. 
+2.  Unzip and double click on `6Spiral.sketchplugin` to install the plugin.
+3. Make and select a shape and then go to `Plugins -> 🌀6Spiral - Make Spiral`  
+(or use the shortcut `Control + Shift + 6`). 
 4. Change the parameters to make the initial shape of the spiral/helix that you'd like.
 5. You might want to do some suggested common cleanup steps before applying your own style. *See section below.*
 
@@ -37,7 +38,9 @@ Plugin will create a spiral with the origin at the center of the selected shape.
 6Spiral will always make an origin point, which can then be deleted.
 *(If the inner radius is set to 0 there will be two points at the very beginning of the shape).* 
 You'll likely want to change the border edges to to have rounded ends and joins.
-<img width="165" alt="round_cap_and_corners" src="https://user-images.githubusercontent.com/2822227/45351142-46930080-b56a-11e8-91df-e19f23c9ab90.png">
+
+![6spiral_round_cap_and_corners](https://user-images.githubusercontent.com/2822227/45471004-8c73d400-b6e4-11e8-9c24-87b08db8e407.png)
+
 A nice way to make a completely smooth spiral is to set a large corner radius on all points (except the last and first point).
 
 ![setting_radius_on_spiral_points](https://user-images.githubusercontent.com/2822227/45354068-a214bc80-b571-11e8-80fe-f39d50c222d0.gif)
@@ -60,7 +63,7 @@ A nice way to make a completely smooth spiral is to set a large corner radius on
 [Looper is a great plugin](http://sureskumar.com/looper/) you can use in combination with 6Spiral to make interesting effects. Before using Looper you'll probably want to group the spiral with a shape centered on the origin of the spiral that has bounds that are larger than that of the spiral so that the center of the group is centered on the origin of the spiral.
 
 # Reporting Issues, Feedback, More Info, ... 
-👋Hi. Feel free to contact me at matej.marjanovich@gmail.com or [open an issue here on Github](https://github.com/matej-marjanovic/6Spiral-Sketch-Plugin/issues).
+👋 Hi. Feel free to contact me at matej.marjanovich@gmail.com or [open an issue here on Github](https://github.com/matej-marjanovic/6Spiral-Sketch-Plugin/issues).
 
 [This medium article has some of the same info but also includes more ideas and suggestions on where to use this plugin.](https://medium.com/@matejmarjanovic/4a921c13f5ef)
 
