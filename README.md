@@ -20,7 +20,7 @@
 ![6spiral_in_plugin_menu](https://user-images.githubusercontent.com/2822227/45353465-b5bf2380-b56f-11e8-904a-5107077eedf8.png)
 <img width="506" alt="6spiral_demo_1" src="https://user-images.githubusercontent.com/2822227/45353519-dd15f080-b56f-11e8-91e1-05ce76b5ff1a.png">
 
-Plugin will create a spiral with the origin origin at the center of the selected shape.
+Plugin will create a spiral with the origin at the center of the selected shape.
 *The center of the spiral shape is not the same as the origin (first point) of the spiral.*
 
 *For plugin to work make sure only one simple shape you made is selected when you run it. **Plugin won't work if you select a group, artboard, text layer or any shape layer that you didn't make yourself (like outlined text).*** 
