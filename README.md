@@ -76,6 +76,8 @@ Thanks to [Sures](https://github.com/sureskumar/) for feedback on the beta versi
 
 Issues can also be mitigated/lessened by disabling the "Continously Update" option and pressing the "Update Spiral" each time you want to update the spiral to the changed parameters.
 
+Also, if you're using many other Sketch plugins, certain other plugins may interfere with 6Spiral so if you're having issues (spirals aren't being drawn, for example) the recommended step is to **try disabling all plugins other than 6Spiral and then restarting Sketch** and checking if the plugin then works.
+
 ## A few resources that I found useful for developing this Sketch Plugin
 - https://developer.sketchapp.com/guides/
 - https://awkward.co/blog/how-to-create-floating-sketch-plugins-i/
