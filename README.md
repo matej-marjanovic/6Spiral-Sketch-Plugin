@@ -5,7 +5,7 @@
 
 # 🌀6Spiral Sketch Plugin v1.0.1
 
-6Spiral is a sketch plugin to draw spirals and it also allows you to convert the 2D spirals into 3D-like helix shapes at a specified isometric angle.
+6Spiral is a sketch plugin to draw spirals and it also allows you to convert the 2D spirals into 3D-like helix shapes at a specified angle in parallel projection.
 
 6Spirals supports creation of the two most common types of spirals: Archmedean Spirals and Logarithmic Spirals.  
 
