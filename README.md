@@ -1,13 +1,21 @@
-
-  
-
-![6spiral_logo_image](https://user-images.githubusercontent.com/2822227/45348015-53135b00-b562-11e8-8f37-d5a44997418c.png) 
+<img src="https://user-images.githubusercontent.com/2822227/46310803-307acd80-c575-11e8-9015-cb1a066849ea.jpeg" alt="6spiral_logo_image" width="430" height="">
 
 # 🌀6Spiral Sketch Plugin v1.0.1
 
+[![Price: free](https://img.shields.io/badge/price-FREE-0098f7.svg)](https://github.com/matej-marjanovic/6Spiral-Sketch-Plugin/blob/master/LICENSE.txt)
+[![Version: 1.0.1](https://img.shields.io/badge/version-1.0.1_-green.svg)](https://github.com/matej-marjanovic/6Spiral-Sketch-Plugin/releases)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/matej-marjanovic/6Spiral-Sketch-Plugin/blob/master/LICENSE.txt)
+[![License: MIT](https://img.shields.io/badge/tested_on-Sketch_51.3-blue.svg)](https://www.sketchapp.com/updates/)
+[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Make%20great%20looking%20spiral%20and%20helix%20shapes%20in%20Sketch&url=https://github.com/matej-marjanovic/6Spiral-Sketch-Plugin&hashtags=design,sketch,sketchapp,uiux)
+
 6Spiral is a sketch plugin to draw spirals and it also allows you to convert the 2D spirals into 3D-like helix shapes at a specified angle in parallel projection.
 
-6Spirals supports creation of the two most common types of spirals: Archmedean Spirals and Logarithmic Spirals.  
+6Spirals supports creation of the two most common types of spirals: Archmedean Spirals and Logarithmic Spirals. 
+
+<a href="http://bit.ly/SketchRunnerWebsite">
+  <img width="160" height="41" src="http://sketchrunner.com/img/badge_blue.png" >
+</a>
+ 
 
 # Getting Started
 
