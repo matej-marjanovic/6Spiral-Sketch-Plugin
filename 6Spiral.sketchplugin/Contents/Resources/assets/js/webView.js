@@ -1,9 +1,9 @@
 
 // Commented out so that it's possible to Right Click -> Inspect Element.
 // Disable the context menu
-// document.addEventListener("contextmenu", function(e) {
-//   e.preventDefault();
-// });
+document.addEventListener("contextmenu", function(e) {
+  e.preventDefault();
+});
 
 const SPIRAL_CONSTANTS = {
   SPIRAL_TYPE_ARCHIMEDEAN: 0,
