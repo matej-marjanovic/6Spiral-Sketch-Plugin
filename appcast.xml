@@ -27,5 +27,17 @@
       </description>
       <enclosure url="https://github.com/matej-marjanovic/6Spiral-Sketch-Plugin/releases/download/v1.0.1/6Spiral.sketchplugin.zip" sparkle:version="1.0.1"/>
     </item>
+    <item>
+      <title>Version 1.0.2</title>
+      <description>
+        <![CDATA[
+            <ul>
+              <li>Compatible with Sketch 52.</li>
+              <li>Helix panel has feature to auto-adjust height based on angle.</li>
+            </ul>
+          ]]>
+      </description>
+      <enclosure url="https://github.com/matej-marjanovic/6Spiral-Sketch-Plugin/releases/download/v1.0.2/6Spiral.zip" sparkle:version="1.0.2"/>
+    </item>
   </channel>
 </rss>
