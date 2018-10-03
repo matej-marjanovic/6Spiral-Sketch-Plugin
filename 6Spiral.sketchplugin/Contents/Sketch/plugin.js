@@ -5,6 +5,8 @@ const SPIRAL_CONSTANTS = {
   SPIRAL_TYPE_LOGARITHIMIC: 1
 };
 
+var debugMode = false;
+
 var doc;
 var selectedLayers;
 var selectedCount;
@@ -13,12 +15,10 @@ var layer2;
 var spiralObjectID;
 var currentPage;
 var pageLayers;
-var debugMode = false;
 var panel;
 
 var data;
 
-var drawingSpiralInProcess = false;
 var pluginChangedSelection = false;
 
 function onRun(context) {
@@ -118,21 +118,22 @@ function onRun(context) {
             superDebug("Layer", layer);
             superDebug("Layer", layer.toString());
             //check that this layer is a shape
-            if (layer && layer.isKindOfClass(MSShapeGroup)) {
+            if (isAllowedShape(layer)) {
+              superDebug("VALID SHAPE DETECTED IN INTIAL CALL");
 
-                // layer.select_byExtendingSelection(true, false);
+              // layer.select_byExtendingSelection(true, false);
 
-                superDebug("addSpiral layer ", layer);
-                addSpiral(layer, data);
-                pageLayers = currentPage.layers();
-        
-                //group and name new group
-                // superDebug("STARTED MAKING GROUP", " ");
-                // var groupAction = doc.actionsController().actionForID("MSGroupAction");
-                // groupAction.group(nil);
-                // gr = layer.parentGroup();
-                // gr.setName('Spiral Group');
-                // superDebug("FINISHED MAKING GROUP", " ");
+              superDebug("addSpiral layer ", layer);
+              addSpiral(layer, data);
+              pageLayers = currentPage.layers();
+      
+              //group and name new group
+              // superDebug("STARTED MAKING GROUP", " ");
+              // var groupAction = doc.actionsController().actionForID("MSGroupAction");
+              // groupAction.group(nil);
+              // gr = layer.parentGroup();
+              // gr.setName('Spiral Group');
+              // superDebug("FINISHED MAKING GROUP", " ");
         
             } else {
               superDebug("DIDNT MAKE SPIRAL", " ");
@@ -170,6 +171,7 @@ function onRun(context) {
     COScript.currentCOScript().setShouldKeepAround_(false);
   });
 }
+
 
 function addSpiral(layer, data) {
   superDebug("Started addSpiral", " ");
@@ -286,18 +288,14 @@ function addSpiral(layer, data) {
 
   //spiralPath.closePath();
   spiralPath = MSPath.pathWithBezierPath(spiralPath);
-  var spiralShape = MSShapeGroup.shapeWithBezierPath(spiralPath);
+  var spiralShape = MSShapeGroup.layerWithPath(spiralPath);
 
   spiralObjectID = spiralShape.objectID();
   superDebug("Set SPIRAL OBJECT ID", typeof spiralObjectID);
   superDebug("Set SPIRAL OBJECT ID", spiralObjectID.toString());
-  superDebug("Set SPIRAL OBJECT ID", spiralObjectID);
 
-
-  var lineThickness = layer.style().borders().objectAtIndex(0).thickness();
-  var scale = 1 + (lineThickness / 5);
-  // spiralShape.frame().setWidth(Math.floor(spiralShape.frame().width() * scale));
-  // spiralShape.frame().setHeight(Math.floor(spiralShape.frame().height() * scale));
+  // spiralShape.frame().setWidth(Math.floor(spiralShape.frame().width()));
+  // spiralShape.frame().setHeight(Math.floor(spiralShape.frame().height()));
 
   //color same as line
   // var fill = spiralShape.style().addStylePartOfType(0);
@@ -350,9 +348,8 @@ var onSelectionChanged = function(context) {
       superDebug("LAYER", layer.toString());
       superDebug("onSelectionChanged frame", selection[0].frame().toString());
       //check that this layer is a shape
-      if (layer && layer.isKindOfClass(MSShapeGroup)) {
-
-        superDebug("onSelectionChanged MSShapeGroup found", " ");
+      if (isAllowedShape(layer)) {
+        superDebug("onSelectionChanged isAllowedShape allowed shape passed", " ");
 
         // Calling AddSpiral - infinite loop, as addSpiral() changes the selection, which is this function.
         // --> Specifically calling >> spiralShape.select_byExtendingSelection(true, true); may triger this function.
@@ -372,7 +369,7 @@ var onSelectionChanged = function(context) {
         }
   
       } else {
-        superDebug("NOT FOUND onSelectionChanged MSShapeGroup", " ");
+        superDebug("NOT FOUND onSelectionChanged SHAPE NOT VALID", " ");
         context.actionContext.document.showMessage('Oops. To run 🌀6Spiral you need to select a shape.');
       }
     }
@@ -383,8 +380,14 @@ var onSelectionChanged = function(context) {
   }
 };
 
+// CHECKING FOR ALL KINDS OF VALID SHAPES
+function isAllowedShape(layer) {
+  // some checks are redundant. Will return true for MSArtboardGroup regardless if checking specifically for the class. Is probably subclass of other class. Same for MSRectangleShape, etc.
+ return (layer && ( layer.isKindOfClass(MSShapePathLayer) || layer.isKindOfClass(MSRectangleShape) || layer.isKindOfClass(MSOvalShape) || layer.isKindOfClass(MSTriangleShape) || layer.isKindOfClass(MSShapeGroup)  || layer.isKindOfClass(MSLayerGroup) || layer.isKindOfClass(MSArtboardGroup)  ));
+}
+
 // OPENING LINKS FROM WEBVIEW
-function openURL(url){
+function openURL(url) {
   var nsurl = NSURL.URLWithString(url);
   NSWorkspace.sharedWorkspace().openURL(nsurl)
 }
