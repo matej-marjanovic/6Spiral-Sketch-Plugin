@@ -1,11 +1,11 @@
 <img src="https://user-images.githubusercontent.com/2822227/46310803-307acd80-c575-11e8-9015-cb1a066849ea.jpeg" alt="6spiral_logo_image" width="430" height="">
 
-# 🌀6Spiral Sketch Plugin v1.0.1
+# 🌀6Spiral Sketch Plugin v1.0.2
 
 [![Price: free](https://img.shields.io/badge/price-FREE-0098f7.svg)](https://github.com/matej-marjanovic/6Spiral-Sketch-Plugin/blob/master/LICENSE.txt)
-[![Version: 1.0.1](https://img.shields.io/badge/version-1.0.1_-green.svg)](https://github.com/matej-marjanovic/6Spiral-Sketch-Plugin/releases)
+[![Version: 1.0.2](https://img.shields.io/badge/version-1.0.2_-green.svg)](https://github.com/matej-marjanovic/6Spiral-Sketch-Plugin/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/matej-marjanovic/6Spiral-Sketch-Plugin/blob/master/LICENSE.txt)
-[![License: MIT](https://img.shields.io/badge/tested_on-Sketch_51.3-blue.svg)](https://www.sketchapp.com/updates/)
+[![License: MIT](https://img.shields.io/badge/works_with-Sketch_52-blue.svg)](https://www.sketchapp.com/updates/)
 [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Make%20great%20looking%20spiral%20and%20helix%20shapes%20in%20Sketch&url=https://github.com/matej-marjanovic/6Spiral-Sketch-Plugin&hashtags=design,sketch,sketchapp,uiux)
 
 6Spiral is a sketch plugin to draw spirals and it also allows you to convert the 2D spirals into 3D-like helix shapes at a specified angle in parallel projection.
@@ -19,7 +19,7 @@
 
 # Getting Started
 
-1. Download the [latest release](https://github.com/matej-marjanovic/6Spiral-Sketch-Plugin/releases).
+1. Download the [latest release](https://github.com/matej-marjanovic/6Spiral-Sketch-Plugin/releases) (latest release works with Sketch 52. **If you're on Sketch 51.3 then use version 1.0.1.** Older Sketch versions are not supported).
 2.  Unzip and double click on `6Spiral.sketchplugin` to install the plugin.
 3. Make and select a shape and then go to `Plugins -> 🌀6Spiral - Make Spiral`  
 (or use the shortcut `Control + Shift + 6`). 
@@ -32,7 +32,6 @@
 Plugin will create a spiral with the origin at the center of the selected shape.
 *The center of the spiral shape is not the same as the origin (first point) of the spiral.*
 
-*For plugin to work make sure only one simple shape you made is selected when you run it. **Plugin won't work if you select a group, artboard, text layer or any shape layer that you didn't make yourself (like outlined text).*** 
 
 [There is also a sketch file with a tutorial and some examples that you can download here.](https://github.com/matej-marjanovic/6Spiral-Tutorial-Example-Sketch-File/raw/master/6Spiral%20Examples%20and%20Tutorial.sketch)
 

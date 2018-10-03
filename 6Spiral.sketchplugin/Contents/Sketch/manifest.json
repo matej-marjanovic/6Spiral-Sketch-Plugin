@@ -1,7 +1,7 @@
 {
   "name" : "🌀6Spiral",
   "identifier" : "design.matej.6spiral",
-  "version" : "1.0.1",
+  "version" : "1.0.2",
   "appcast": "https://raw.githubusercontent.com/matej-marjanovic/6Spiral-Sketch-Plugin/master/appcast.xml",
   "icon": "icon.png",
   "description" : "Plugin to make spirals in Sketch.",
