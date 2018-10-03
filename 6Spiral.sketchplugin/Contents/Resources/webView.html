@@ -96,7 +96,9 @@
 
         <div class="well well-sm">
           <input type="checkbox" id="helixCheckbox" aria-label="...">
-          <span> Make helix from Spiral</span>
+          <span> Make helix from spiral &emsp; </span>
+          <input type="checkbox" id="helixAdjustHeightCheckbox" aria-label="...">
+          <span> Adjust height by angle</span>
         </div>
 
         <div class="row">
@@ -116,9 +118,9 @@
 
 
         <div class="form-group" id="last-helix-setting">
-          <label for="number">Set percevied angle (width/height ratio):</label>
+          <label for="number">Set parallel projection angle (width/height ratio):</label>
           <div class="input-group">
-            <span class="input-group-addon">Isometric Angle</span>
+            <span class="input-group-addon">Angle (degrees)</span>
             <input type="number" class="form-control" id="helixIsoAngle" name="helixIsoAngle" value="60">
             <span class="input-group-addon">H/W ratio</span>
             <input type="number" class="form-control" id="helixHWRatio" name="helixHWRatio" value="0.500" step="0.001">

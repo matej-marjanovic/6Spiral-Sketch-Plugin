@@ -1,14 +1,17 @@
 
 // Commented out so that it's possible to Right Click -> Inspect Element.
 // Disable the context menu
-document.addEventListener("contextmenu", function(e) {
-  e.preventDefault();
-});
+// document.addEventListener("contextmenu", function(e) {
+//   e.preventDefault();
+// });
 
 const SPIRAL_CONSTANTS = {
   SPIRAL_TYPE_ARCHIMEDEAN: 0,
   SPIRAL_TYPE_LOGARITHIMIC: 1
 };
+
+var debugLogFlag = true;
+
 
 var currentSpiralType = SPIRAL_CONSTANTS.SPIRAL_TYPE_ARCHIMEDEAN;
 
@@ -25,6 +28,7 @@ var minLogRadiusWarnLabel = document.getElementById('minLogRadiusWarnLabel');
 var minArchimedeanRadiusWarnLabel = document.getElementById('minArchimedeanRadiusWarnLabel');
 
 var shouldMakeHelixCheckbox = document.getElementById('helixCheckbox');
+var helixAdjustHeightCheckbox = document.getElementById('helixAdjustHeightCheckbox');
 var helixOffsetX = document.getElementById('xOffset');
 var helixOffsetY = document.getElementById('yOffset');
 var helixHWRatio = document.getElementById('helixHWRatio');
@@ -59,8 +63,6 @@ var stateHasChangedDuringDrawing = false;
 
 var minPointsText = "";
 var minDegreesText = "";
-
-var debugLogFlag = true;
 
 window.onload = function() {
   updateSpiral();
@@ -200,6 +202,12 @@ shouldMakeHelixCheckbox.addEventListener('click', function (evt) {
   }
 });
 
+helixAdjustHeightCheckbox.addEventListener('click', function (evt) {
+  if(continouslyUpdateCheckbox.checked) {
+    updateSpiral();
+  }
+});
+
 closePanelButton.addEventListener('click',function(){
   debugLog('SPIRAL DEBUG // Close Panel Button Clicked');
   closePanel();
@@ -270,9 +278,11 @@ function sendSpiralDataToPlugin() {
     "points": Math.round(points.value),
     "lineWidth": lineWidth.value,
     "shouldMakeHelix": shouldMakeHelixCheckbox.checked,
+    "shouldAdjustHelixHeight": helixAdjustHeightCheckbox.checked,
     "helixOffsetX": helixOffsetX.value,
     "helixOffsetY": helixOffsetY.value,
     "helixHWRatio": helixHWRatio.value,
+    "helixIsoAngle": helixIsoAngle.value,
     "date": new Date().getTime()
   }
   debugLog(data);

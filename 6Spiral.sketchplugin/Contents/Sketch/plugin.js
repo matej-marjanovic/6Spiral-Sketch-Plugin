@@ -207,11 +207,16 @@ function addSpiral(layer, data) {
   var lineWidth = parseFloat(data.lineWidth);
 
   var shouldMakeHelix = data.shouldMakeHelix;
+  var shouldAdjustHelixHeight = data.shouldAdjustHelixHeight;
   var helixOffsetX = parseFloat(data.helixOffsetX);
   var helixOffsetY = parseFloat(data.helixOffsetY);
   var helixHWRatio = parseFloat(data.helixHWRatio);
+  var helixIsoAngle = parseFloat(data.helixIsoAngle);
   superDebug("helixHWRatio", helixHWRatio);
 
+  if (shouldAdjustHelixHeight) {
+    helixOffsetY = helixOffsetY * Math.sin(helixIsoAngle * (Math.PI / 180));
+  }
 
   var helixPointOffsetX = helixOffsetX/points;
   var helixPointOffsetY = helixOffsetY/points;
