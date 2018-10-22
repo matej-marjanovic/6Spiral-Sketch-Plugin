@@ -319,8 +319,8 @@ function addSpiral(layer, data) {
 
   superDebug("grFrame", grFrame.toString());
 
-  spiralShape.frame().x = (layer.frame().x() + (layer.frame().width()/2.0)) + (spiralShape.frame().x());
-  spiralShape.frame().y = (layer.frame().y() + (layer.frame().height()/2.0)) + (spiralShape.frame().y());
+  spiralShape.frame().x = spiralShape.frame().x() + (layer.frame().x() + (layer.frame().width()/2.0));
+  spiralShape.frame().y = spiralShape.frame().y() + (layer.frame().y() + (layer.frame().height()/2.0));
 
   gr.addLayers([spiralShape]);
   // spiralShape.select_byExtendingSelection(true, true);
