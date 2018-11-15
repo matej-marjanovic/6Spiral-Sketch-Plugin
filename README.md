@@ -10,7 +10,7 @@
 
 6Spiral is a sketch plugin to draw spirals and it also allows you to convert the 2D spirals into 3D-like helix shapes at a specified angle in parallel projection.
 
-6Spirals supports creation of the two most common types of spirals: Archmedean Spirals and Logarithmic Spirals. 
+6Spirals supports creation of the two most common types of spirals: Archimedean Spirals and Logarithmic Spirals. 
 
 <a href="http://bit.ly/SketchRunnerWebsite">
   <img width="160" height="41" src="http://sketchrunner.com/img/badge_blue.png" >
