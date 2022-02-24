@@ -1,3 +1,8 @@
+**This plugin no longer works with the latest version of Sketch but there is an updated version that works with Figma:**
+- https://github.com/matej-marjanovic/6Spiral-Figma-Plugin
+
+If you need to have a spiral and/or helix in Sketch just make it using the new plugin in Figma and `Copy as SVG -> Paste` into Sketch.
+
 <img src="https://user-images.githubusercontent.com/2822227/46310803-307acd80-c575-11e8-9015-cb1a066849ea.jpeg" alt="6spiral_logo_image" width="430" height="">
 
 # 🌀6Spiral Sketch Plugin v1.0.2
